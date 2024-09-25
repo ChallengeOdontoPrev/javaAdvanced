@@ -45,31 +45,46 @@ public class AuthService implements UserDetailsService {
 
     @Transactional
     public RegisterResponseDTO signup(RegisterRequestDTO authDTO) {
-        if (this.userService.findByEmail(authDTO.email()).isEmpty()) {
-            if (authDTO.password().equals(authDTO.confirmPassword())) {
-                String encryptedPassword = passwordEncoder.encode(authDTO.password());
-                UserDTO user = new UserDTO(new User(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role()));
+        this.userService.findByEmail(authDTO.email())
+                .ifPresent(user -> {
+                    throw new UserAlreadyExistsException("Conta já existente com este email.");
+                });
 
-                user = this.userService.insert(user);
-                return new RegisterResponseDTO(user.getEmail(), user.getName());
-            } else {
-                throw new InvalidCredentialsException("As senhas não coincidem !!");
+        this.validatePassword(authDTO.password(), authDTO.confirmPassword());
+
+        String encryptedPassword = passwordEncoder.encode(authDTO.password());
+
+        UserDTO user = switch (authDTO.role()) {
+            case DENTISTA -> {
+                if (authDTO.cro() == null || authDTO.cro().isBlank()) {
+                    throw new InvalidCredentialsException("O CRO é obrigatório para o papel de Dentista.");
+                }
+                yield new UserDTO(new User(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.cro(), authDTO.role()));
             }
-        } else {
-            throw new UserAlreadyExistsException("Conta já existente com este email.");
-        }
+            case ATENDENTE -> {
+                if (authDTO.cro() != null) {
+                    throw new InvalidCredentialsException("A atendente não pode ter CRO.");
+                }
+                yield new UserDTO(new User(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role()));
+            }
+            default -> throw new InvalidCredentialsException("Papel de usuário inválido.");
+        };
+
+        user = this.userService.insert(user);
+        return new RegisterResponseDTO(user.getEmail(), user.getName());
     }
 
     @Transactional
     public void forgotPassword(String email, String newPassword, String confirmNewPassword) {
         User user = (User) this.loadUserByUsername(email);
-
-        if (!newPassword.equals(confirmNewPassword)) {
-            throw new InvalidCredentialsException("As senhas não coincidem !!");
-        }
-
+        this.validatePassword(newPassword, confirmNewPassword);
         user.setPassword(passwordEncoder.encode(newPassword));
         this.userService.insert(new UserDTO(user));
     }
 
+    private void validatePassword(String password, String confirmPassword) {
+        if (!password.equals(confirmPassword)) {
+            throw new InvalidCredentialsException("As senhas não coincidem !!");
+        }
+    }
 }

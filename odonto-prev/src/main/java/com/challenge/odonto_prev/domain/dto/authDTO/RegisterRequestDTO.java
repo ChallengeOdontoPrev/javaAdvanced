@@ -14,5 +14,6 @@ public record RegisterRequestDTO(
         @NotBlank(message = "Nome é obrigatório")
         String name,
         @NotNull(message = "A função/papel é obrigatória")
-        UserRole role) {
+        UserRole role,
+        String cro) {
 }

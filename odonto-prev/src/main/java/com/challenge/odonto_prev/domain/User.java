@@ -28,8 +28,20 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole role;
+    @Column(unique = true)
+    private String cro;
     private LocalDateTime createdAt;
 
+    // Dentista
+    public User(String name, String email, String password, String cro, UserRole role) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.cro = cro;
+        this.role = role;
+    }
+
+    // Atendente
     public User(String name, String email, String password, UserRole role) {
         this.name = name;
         this.email = email;
