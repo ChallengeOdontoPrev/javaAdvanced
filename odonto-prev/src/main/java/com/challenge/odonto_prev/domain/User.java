@@ -32,6 +32,9 @@ public class User implements UserDetails {
     private String cro;
     private LocalDateTime createdAt;
 
+    @ManyToOne
+    private Clinica clinica;
+
     // Dentista
     public User(String name, String email, String password, String cro, UserRole role) {
         this.name = name;

@@ -9,11 +9,11 @@ public record RegisterRequestDTO(
         String email,
         @NotBlank(message = "Senha é obrigatória")
         String password,
-        @NotBlank(message = "A Senha de confirmação é obrigatória")
-        String confirmPassword,
         @NotBlank(message = "Nome é obrigatório")
         String name,
         @NotNull(message = "A função/papel é obrigatória")
         UserRole role,
-        String cro) {
+        String cro,
+        Long idClinica
+) {
 }

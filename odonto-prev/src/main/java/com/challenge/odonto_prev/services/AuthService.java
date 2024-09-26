@@ -50,8 +50,6 @@ public class AuthService implements UserDetailsService {
                     throw new UserAlreadyExistsException("Conta já existente com este email.");
                 });
 
-        this.validatePassword(authDTO.password(), authDTO.confirmPassword());
-
         String encryptedPassword = passwordEncoder.encode(authDTO.password());
 
         UserDTO user = switch (authDTO.role()) {
@@ -59,13 +57,13 @@ public class AuthService implements UserDetailsService {
                 if (authDTO.cro() == null || authDTO.cro().isBlank()) {
                     throw new InvalidCredentialsException("O CRO é obrigatório para o papel de Dentista.");
                 }
-                yield new UserDTO(new User(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.cro(), authDTO.role()));
+                yield new UserDTO(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role(), authDTO.cro(), authDTO.idClinica());
             }
             case ATENDENTE -> {
                 if (authDTO.cro() != null) {
                     throw new InvalidCredentialsException("A atendente não pode ter CRO.");
                 }
-                yield new UserDTO(new User(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role()));
+                yield new UserDTO(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role(), authDTO.idClinica());
             }
             default -> throw new InvalidCredentialsException("Papel de usuário inválido.");
         };
