@@ -33,6 +33,15 @@ public class UserService {
         return new UserDTO(user);
     }
 
+    @Transactional
+    public UserDTO updatePassword(UserDTO userDTO) {
+        User user = this.userRepository.findByEmail(userDTO.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("Conta não encontrada"));
+
+        user.setPassword(userDTO.getPassword());
+        return new UserDTO(this.userRepository.save(user));
+    }
+
     public Optional<User> findByEmail(String email) {
         return this.userRepository.findByEmail(email);
     }

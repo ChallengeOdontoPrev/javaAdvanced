@@ -6,10 +6,7 @@ import com.challenge.odonto_prev.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -37,10 +34,20 @@ public class AuthController {
         return ResponseEntity.created(uri).body(account);
     }
 
-    @PostMapping("/forgotPassword")
-    public ResponseEntity forgotPassword(@Valid @RequestBody ForgotPasswordResquestDTO data) {
-        this.authService.forgotPassword(data.email(), data.newPassword(), data.confirmNewPassword());
-        return ResponseEntity.ok().build();
+    // Endpoint para solicitar a redefinição de senha
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam("email") String email) {
+        authService.forgotPassword(email);
+        return ResponseEntity.ok("E-mail de redefinição de senha enviado.");
+    }
+
+    // Endpoint para redefinir a senha
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam("token") String token,
+                                                @RequestParam("newPassword") String newPassword,
+                                                @RequestParam("confirmNewPassword") String confirmNewPassword) {
+        authService.resetPassword(token, newPassword, confirmNewPassword);
+        return ResponseEntity.ok("Senha redefinida com sucesso.");
     }
 
 }

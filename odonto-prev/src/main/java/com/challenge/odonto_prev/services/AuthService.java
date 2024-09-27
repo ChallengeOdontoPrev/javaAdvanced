@@ -26,6 +26,8 @@ public class AuthService implements UserDetailsService {
     private TokenService tokenService;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -72,12 +74,49 @@ public class AuthService implements UserDetailsService {
         return new RegisterResponseDTO(user.getEmail(), user.getName());
     }
 
+//    @Transactional
+//    public void forgotPassword(String email, String newPassword, String confirmNewPassword) {
+//        User user = (User) this.loadUserByUsername(email);
+//        this.validatePassword(newPassword, confirmNewPassword);
+//        user.setPassword(passwordEncoder.encode(newPassword));
+//        this.userService.insert(new UserDTO(user));
+//    }
+
     @Transactional
-    public void forgotPassword(String email, String newPassword, String confirmNewPassword) {
-        User user = (User) this.loadUserByUsername(email);
-        this.validatePassword(newPassword, confirmNewPassword);
+    public void forgotPassword(String email) {
+        User user = userService.findByEmail(email)
+                                  .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o e-mail fornecido."));
+
+        // Gera o token JWT específico para redefinição de senha
+        String token = tokenService.generatePasswordResetToken(user);
+
+        // Cria o link de redefinição de senha
+        String resetUrl = "http://localhost:8080/auth/reset-password?token=" + token;
+
+        // Envia o e-mail
+        emailService.sendPasswordResetEmail(user.getEmail(), resetUrl);
+    }
+
+    @Transactional
+    public void resetPassword(String token, String newPassword, String confirmNewPassword) {
+        // Valida as senhas
+        validatePassword(newPassword, confirmNewPassword);
+
+        // Valida o token e obtém o e-mail
+        String email = tokenService.validatePasswordResetToken(token);
+        if (email == null) {
+            throw new RuntimeException("Token inválido ou expirado.");
+        }
+
+        // Encontra o usuário pelo e-mail
+        UserDTO user = new UserDTO(
+            userService.findByEmail(email)
+                                  .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."))
+        );
+
+        // Atualiza a senha
         user.setPassword(passwordEncoder.encode(newPassword));
-        this.userService.insert(new UserDTO(user));
+        userService.updatePassword(user);
     }
 
     private void validatePassword(String password, String confirmPassword) {
