@@ -22,7 +22,6 @@ public class UserDTO {
     private String password;
     private UserRole role;
     private String cro;
-    private Long clinicaId;
 
     public UserDTO(User user) {
         this.id = user.getId();
@@ -32,20 +31,18 @@ public class UserDTO {
         this.role = user.getRole();
     }
 
-    public UserDTO(String name, String email, String password, UserRole role, String cro, Long clinicaId) {
+    public UserDTO(String name, String email, String password, UserRole role, String cro) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
         this.cro = cro;
-        this.clinicaId = clinicaId;
     }
 
-    public UserDTO(String name, String email, String password, UserRole role, Long clinicaId) {
+    public UserDTO(String name, String email, String password, UserRole role) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
-        this.clinicaId = clinicaId;
     }
 }

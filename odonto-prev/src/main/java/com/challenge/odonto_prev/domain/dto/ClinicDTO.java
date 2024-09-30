@@ -1,6 +1,6 @@
 package com.challenge.odonto_prev.domain.dto;
 
-import com.challenge.odonto_prev.domain.Clinica;
+import com.challenge.odonto_prev.domain.Clinic;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ClinicaDTO {
+public class ClinicDTO {
     private Long id;
     @NotBlank
     private String name;
@@ -24,12 +24,12 @@ public class ClinicaDTO {
     @Email
     private String email;
 
-    public ClinicaDTO(Clinica clinica) {
-        this.id = clinica.getId();
-        this.name = clinica.getName();
-        this.cnpj = clinica.getCnpj();
-        this.address = clinica.getAddress();
-        this.phone = clinica.getPhone();
-        this.email = clinica.getEmail();
+    public ClinicDTO(Clinic clinic) {
+        this.id = clinic.getId();
+        this.name = clinic.getName();
+        this.cnpj = clinic.getCnpj();
+        this.address = clinic.getAddress();
+        this.phone = clinic.getPhone();
+        this.email = clinic.getEmail();
     }
 }

@@ -59,13 +59,13 @@ public class AuthService implements UserDetailsService {
                 if (authDTO.cro() == null || authDTO.cro().isBlank()) {
                     throw new InvalidCredentialsException("O CRO é obrigatório para o papel de Dentista.");
                 }
-                yield new UserDTO(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role(), authDTO.cro(), authDTO.idClinica());
+                yield new UserDTO(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role(), authDTO.cro());
             }
             case ATENDENTE -> {
                 if (authDTO.cro() != null) {
                     throw new InvalidCredentialsException("A atendente não pode ter CRO.");
                 }
-                yield new UserDTO(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role(), authDTO.idClinica());
+                yield new UserDTO(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role());
             }
             default -> throw new InvalidCredentialsException("Papel de usuário inválido.");
         };

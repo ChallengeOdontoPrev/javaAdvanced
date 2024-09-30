@@ -1,6 +1,6 @@
 package com.challenge.odonto_prev.domain;
 
-import com.challenge.odonto_prev.domain.dto.ClinicaDTO;
+import com.challenge.odonto_prev.domain.dto.ClinicDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,8 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "tb_clinica")
-public class Clinica {
+@Table(name = "tb_clinic")
+public class Clinic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,15 +28,15 @@ public class Clinica {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "clinica")
-    private List<User> users;
+    @OneToMany(mappedBy = "clinic")
+    private List<Appointment> appointments;
 
-    public Clinica(ClinicaDTO clinicaDTO) {
-        this.id = clinicaDTO.getId();
-        this.name = clinicaDTO.getName();
-        this.cnpj = clinicaDTO.getCnpj();
-        this.address = clinicaDTO.getAddress();
-        this.phone = clinicaDTO.getPhone();
-        this.email = clinicaDTO.getEmail();
+    public Clinic(ClinicDTO clinicDTO) {
+        this.id = clinicDTO.getId();
+        this.name = clinicDTO.getName();
+        this.cnpj = clinicDTO.getCnpj();
+        this.address = clinicDTO.getAddress();
+        this.phone = clinicDTO.getPhone();
+        this.email = clinicDTO.getEmail();
     }
 }

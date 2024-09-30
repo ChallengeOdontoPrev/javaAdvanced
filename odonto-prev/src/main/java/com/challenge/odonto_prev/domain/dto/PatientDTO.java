@@ -23,7 +23,6 @@ public class PatientDTO {
     private LocalDate birthDate;
     @NotNull
     private Long numCard;
-    @NotNull
     private LocalDateTime createdAt;
 
     public PatientDTO(Patient patient){

@@ -1,5 +1,6 @@
 package com.challenge.odonto_prev.domain;
 
+import com.challenge.odonto_prev.domain.dto.UserDTO;
 import com.challenge.odonto_prev.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,8 +33,8 @@ public class User implements UserDetails {
     private String cro;
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    private Clinica clinica;
+    @OneToMany(mappedBy = "dentist")
+    private List<Appointment> appointments;
 
     // Dentista
     public User(String name, String email, String password, String cro, UserRole role) {
@@ -50,6 +51,16 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
         this.role = role;
+    }
+
+    public User(UserDTO userDTO){
+        this.id = userDTO.getId();
+        this.name = userDTO.getName();
+        this.email = userDTO.getEmail();
+        this.password = userDTO.getPassword();
+        this.role = userDTO.getRole();
+        this.cro = userDTO.getCro();
+        this.createdAt = LocalDateTime.now();
     }
 
     @Override

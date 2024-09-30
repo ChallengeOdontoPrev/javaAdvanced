@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class PatientService {
@@ -18,6 +20,7 @@ public class PatientService {
     @Transactional
     public PatientDTO insert(PatientDTO patientDTO){
         Patient patient = new Patient(patientDTO);
+        patient.setCreatedAt(LocalDateTime.now());
         patient = patientRepository.save(patient);
         return new PatientDTO(patient);
     }
@@ -26,4 +29,7 @@ public class PatientService {
         return patientRepository.findAll().stream().map(PatientDTO::new).toList();
     }
 
+    public PatientDTO findById(Long id){
+        return new PatientDTO(patientRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Paciente não encontrado !!")));
+    }
 }

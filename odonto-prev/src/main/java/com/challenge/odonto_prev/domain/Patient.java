@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -26,7 +27,11 @@ public class Patient {
     private Long numCard;
     private LocalDateTime createdAt;
 
+    @OneToMany(mappedBy = "patient")
+    private List<Appointment> appointments;
+
     public Patient(PatientDTO patientDTO){
+        this.id = patientDTO.getId();
         this.name = patientDTO.getName();
         this.rg = patientDTO.getRg();
         this.birthDate = patientDTO.getBirthDate();
