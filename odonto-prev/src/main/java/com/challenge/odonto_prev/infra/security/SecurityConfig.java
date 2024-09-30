@@ -32,6 +32,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/forgot-password").permitAll()
                         .requestMatchers(HttpMethod.POST, "/clinicas").permitAll()
                         .requestMatchers(HttpMethod.GET, "/clinicas").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/patients").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/patients").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .anyRequest().authenticated() // Todas as outras requisições precisam de autenticação
                 )
