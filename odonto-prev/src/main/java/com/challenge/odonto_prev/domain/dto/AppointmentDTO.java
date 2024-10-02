@@ -26,7 +26,6 @@ public class AppointmentDTO {
     private Long patientId;
     @NotNull
     private Long dentistId;
-    @NotNull
     private Long clinicId;
     private LocalDateTime createdAt;
 

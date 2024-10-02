@@ -31,6 +31,9 @@ public class Clinic {
     @OneToMany(mappedBy = "clinic")
     private List<Appointment> appointments;
 
+    @OneToMany(mappedBy = "clinic")
+    private List<User> users;
+
     public Clinic(ClinicDTO clinicDTO) {
         this.id = clinicDTO.getId();
         this.name = clinicDTO.getName();

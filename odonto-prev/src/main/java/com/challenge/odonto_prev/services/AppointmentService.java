@@ -36,12 +36,9 @@ public class AppointmentService {
         appointment.setPatient(new Patient(
                 patientService.findById(appointmentDTO.getPatientId())
         ));
-        appointment.setDentist(new User(
-                userService.findById(appointmentDTO.getDentistId())
-        ));
-        appointment.setClinic(new Clinic(
-                clinicService.findById(appointmentDTO.getClinicId())
-        ));
+        User dentist = new User(userService.findById(appointmentDTO.getDentistId()));
+        appointment.setDentist(dentist);
+        appointment.setClinic(dentist.getClinic());
         appointment.setCreatedAt(LocalDateTime.now());
         appointment = appointmentRepository.save(appointment);
         return new AppointmentDTO(appointment);

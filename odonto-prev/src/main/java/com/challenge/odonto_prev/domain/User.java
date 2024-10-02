@@ -36,6 +36,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "dentist")
     private List<Appointment> appointments;
 
+    @ManyToOne
+    @JoinColumn(name = "clinic_id")
+    private Clinic clinic;
+
     // Dentista
     public User(String name, String email, String password, String cro, UserRole role) {
         this.name = name;
@@ -61,6 +65,17 @@ public class User implements UserDetails {
         this.role = userDTO.getRole();
         this.cro = userDTO.getCro();
         this.createdAt = LocalDateTime.now();
+    }
+
+    public User(User user){
+        this.id = user.getId();
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.role = user.getRole();
+        this.cro = user.getCro();
+        this.createdAt = user.getCreatedAt();
+        this.clinic = user.getClinic();
     }
 
     @Override

@@ -59,13 +59,13 @@ public class AuthService implements UserDetailsService {
                 if (authDTO.cro() == null || authDTO.cro().isBlank()) {
                     throw new InvalidCredentialsException("O CRO é obrigatório para o papel de Dentista.");
                 }
-                yield new UserDTO(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role(), authDTO.cro());
+                yield new UserDTO(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role(), authDTO.cro(), authDTO.clinicId());
             }
             case ATENDENTE -> {
                 if (authDTO.cro() != null) {
                     throw new InvalidCredentialsException("A atendente não pode ter CRO.");
                 }
-                yield new UserDTO(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role());
+                yield new UserDTO(authDTO.name(), authDTO.email(), encryptedPassword, authDTO.role(), authDTO.clinicId());
             }
             default -> throw new InvalidCredentialsException("Papel de usuário inválido.");
         };
@@ -73,14 +73,6 @@ public class AuthService implements UserDetailsService {
         user = this.userService.insert(user);
         return new RegisterResponseDTO(user.getEmail(), user.getName());
     }
-
-//    @Transactional
-//    public void forgotPassword(String email, String newPassword, String confirmNewPassword) {
-//        User user = (User) this.loadUserByUsername(email);
-//        this.validatePassword(newPassword, confirmNewPassword);
-//        user.setPassword(passwordEncoder.encode(newPassword));
-//        this.userService.insert(new UserDTO(user));
-//    }
 
     @Transactional
     public void forgotPassword(String email) {

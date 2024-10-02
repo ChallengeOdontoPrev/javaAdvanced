@@ -1,5 +1,6 @@
 package com.challenge.odonto_prev.services;
 
+import com.challenge.odonto_prev.domain.Clinic;
 import com.challenge.odonto_prev.domain.User;
 import com.challenge.odonto_prev.domain.dto.UserDTO;
 import com.challenge.odonto_prev.repositories.UserRepository;
@@ -26,6 +27,9 @@ public class UserService {
     public UserDTO insert(UserDTO userDTO) {
         User user = new User();
         BeanUtils.copyProperties(userDTO, user);
+        user.setClinic(new Clinic(
+                this.clinicService.findById(userDTO.getClinicId())
+        ));
         user.setCreatedAt(LocalDateTime.now());
         user = userRepository.save(user);
         return new UserDTO(user);
@@ -53,8 +57,8 @@ public class UserService {
         return this.userRepository.findAll().stream().map(UserDTO::new).toList();
     }
 
-    public UserDTO findById(Long id) {
-        return new UserDTO(this.userRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado")));
+    public User findById(Long id) {
+        return this.userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
 }

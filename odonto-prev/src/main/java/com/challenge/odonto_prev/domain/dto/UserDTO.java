@@ -2,11 +2,16 @@ package com.challenge.odonto_prev.domain.dto;
 
 import com.challenge.odonto_prev.domain.User;
 import com.challenge.odonto_prev.enums.UserRole;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -22,6 +27,7 @@ public class UserDTO {
     private String password;
     private UserRole role;
     private String cro;
+    private Long clinicId;
 
     public UserDTO(User user) {
         this.id = user.getId();
@@ -29,20 +35,24 @@ public class UserDTO {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.role = user.getRole();
+        this.cro = user.getCro();
+        this.clinicId = user.getClinic().getId();
     }
 
-    public UserDTO(String name, String email, String password, UserRole role, String cro) {
+    public UserDTO(String name, String email, String password, UserRole role, String cro, Long clinicId) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
         this.cro = cro;
+        this.clinicId = clinicId;
     }
 
-    public UserDTO(String name, String email, String password, UserRole role) {
+    public UserDTO(String name, String email, String password, UserRole role, Long clinicId) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.clinicId = clinicId;
     }
 }

@@ -14,6 +14,7 @@ public record RegisterRequestDTO(
         @NotNull(message = "A função/papel é obrigatória")
         UserRole role,
         String cro,
-        Long idClinica
+        @NotNull(message = "O id da clínica é obrigatório")
+        Long clinicId
 ) {
 }
