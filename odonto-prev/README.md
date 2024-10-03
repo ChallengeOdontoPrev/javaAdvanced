@@ -2,6 +2,8 @@
 
 Serviço de Validação de Consultas Odontológicas
 
+### Link p/ apresentação da solução: https://www.youtube.com/watch?v=wJah-rw1eGQ&ab_channel=Kau%C3%A3Silveira
+
 ## Integrantes do Grupo
 
 ### Kauã Almeida Silveira
