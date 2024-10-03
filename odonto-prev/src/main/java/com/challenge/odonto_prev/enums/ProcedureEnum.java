@@ -1,6 +1,6 @@
 package com.challenge.odonto_prev.enums;
 
-public enum Procedure {
+public enum ProcedureEnum {
     FILLING("Restauração"),
     ROOT_CANAL("Tratamento de Canal"),
     TOOTH_EXTRACTION("Extração Dental"),
@@ -11,7 +11,7 @@ public enum Procedure {
 
     private String description;
 
-    Procedure(String description) {
+    ProcedureEnum(String description) {
         this.description = description;
     }
 }

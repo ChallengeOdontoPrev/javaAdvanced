@@ -71,6 +71,11 @@
             <artifactId>spring-boot-starter-security</artifactId>
             <version>3.3.4</version>
         </dependency>
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc10</artifactId>
+            <version>19.23.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

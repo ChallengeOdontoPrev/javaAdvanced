@@ -1,6 +1,6 @@
 package com.challenge.odonto_prev.domain;
 
-import com.challenge.odonto_prev.enums.Procedure;
+import com.challenge.odonto_prev.enums.ProcedureEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,9 +19,9 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate date;
-    private LocalTime time;
-    private Procedure procedure;
+    private LocalDate dateAppointment;
+    private LocalTime timeAppointment;
+    private ProcedureEnum procedureEnum;
     private LocalDateTime createdAt;
 
     @ManyToOne
