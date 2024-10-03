@@ -21,6 +21,7 @@ public class Appointment {
     private Long id;
     private LocalDate dateAppointment;
     private LocalTime timeAppointment;
+    @Enumerated(EnumType.STRING)
     private ProcedureEnum procedureEnum;
     private LocalDateTime createdAt;
 
