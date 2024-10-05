@@ -1,6 +1,5 @@
 package com.challenge.odonto_prev.domain;
 
-import com.challenge.odonto_prev.enums.ProcedureEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,14 +20,14 @@ public class Appointment {
     private Long id;
     private LocalDate dateAppointment;
     private LocalTime timeAppointment;
-    @Enumerated(EnumType.STRING)
-    private ProcedureEnum procedureEnum;
     private LocalDateTime createdAt;
 
     @ManyToOne
     private Patient patient;
     @ManyToOne
-    private User dentist;
+    private User user;
     @ManyToOne
     private Clinic clinic;
+    @ManyToOne
+    private ProcedureOdonto procedureOdonto;
 }

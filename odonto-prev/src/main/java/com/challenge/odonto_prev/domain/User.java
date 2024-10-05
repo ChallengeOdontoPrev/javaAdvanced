@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private String cro;
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "dentist")
+    @OneToMany(mappedBy = "user")
     private List<Appointment> appointments;
 
     @ManyToOne

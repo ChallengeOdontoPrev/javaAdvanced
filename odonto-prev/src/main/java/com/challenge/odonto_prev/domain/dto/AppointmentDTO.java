@@ -1,7 +1,6 @@
 package com.challenge.odonto_prev.domain.dto;
 
 import com.challenge.odonto_prev.domain.Appointment;
-import com.challenge.odonto_prev.enums.ProcedureEnum;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,23 +19,23 @@ public class AppointmentDTO {
     private LocalDate dateAppointment;
     @NotNull
     private LocalTime timeAppointment;
-    @NotNull
-    private ProcedureEnum procedureEnum;
+    private LocalDateTime createdAt;
     @NotNull
     private Long patientId;
     @NotNull
-    private Long dentistId;
+    private Long userId;
     private Long clinicId;
-    private LocalDateTime createdAt;
+    @NotNull
+    private Long procedureOdontoId;
 
-    public AppointmentDTO(Appointment appointment){
+    public AppointmentDTO(Appointment appointment) {
         this.id = appointment.getId();
         this.dateAppointment = appointment.getDateAppointment();
         this.timeAppointment = appointment.getTimeAppointment();
-        this.procedureEnum = appointment.getProcedureEnum();
         this.createdAt = appointment.getCreatedAt();
         this.patientId = appointment.getPatient().getId();
-        this.dentistId = appointment.getDentist().getId();
+        this.userId = appointment.getUser().getId();
         this.clinicId = appointment.getClinic().getId();
+        this.procedureOdontoId = appointment.getProcedureOdonto().getId();
     }
 }
