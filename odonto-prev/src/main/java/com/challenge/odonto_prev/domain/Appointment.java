@@ -28,6 +28,8 @@ public class Appointment {
     private User user;
     @ManyToOne
     private Clinic clinic;
+    @OneToOne
+    private ProcedureValidation procedureValidation;
     @ManyToOne
-    private ProcedureOdonto procedureOdonto;
+    private ProcedureType procedureType;
 }

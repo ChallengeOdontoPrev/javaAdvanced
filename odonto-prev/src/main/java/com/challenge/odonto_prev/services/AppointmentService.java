@@ -2,9 +2,11 @@ package com.challenge.odonto_prev.services;
 
 import com.challenge.odonto_prev.domain.Appointment;
 import com.challenge.odonto_prev.domain.Patient;
-import com.challenge.odonto_prev.domain.ProcedureOdonto;
 import com.challenge.odonto_prev.domain.User;
 import com.challenge.odonto_prev.domain.dto.AppointmentDTO;
+import com.challenge.odonto_prev.domain.dto.ProcedureValidationDTO;
+import com.challenge.odonto_prev.domain.ProcedureType;
+import com.challenge.odonto_prev.domain.ProcedureValidation;
 import com.challenge.odonto_prev.enums.UserRole;
 import com.challenge.odonto_prev.repositories.AppointmentRepository;
 import com.challenge.odonto_prev.services.exceptions.InvalidCredentialsException;
@@ -29,7 +31,10 @@ public class AppointmentService {
     private UserService userService;
 
     @Autowired
-    private ProcedureOdontoService procedureOdontoService;
+    private ProcedureValidationService procedureValidationService;
+
+    @Autowired
+    private ProcedureTypeService procedureTypeService;
 
     @Transactional
     public AppointmentDTO insert(AppointmentDTO appointmentDTO) {
@@ -46,9 +51,17 @@ public class AppointmentService {
 
         appointment.setUser(user);
         appointment.setClinic(user.getClinic());
-        appointment.setProcedureOdonto(new ProcedureOdonto(
-                this.procedureOdontoService.findById(appointmentDTO.getProcedureOdontoId())
+
+        appointment.setProcedureType(new ProcedureType(
+                this.procedureTypeService.findById(appointmentDTO.getProcedureTypeId())
         ));
+
+        ProcedureValidationDTO procedureValidationDTO = new ProcedureValidationDTO();
+        appointment.setProcedureValidation(new ProcedureValidation(
+                this.procedureValidationService
+                        .insert(procedureValidationDTO, appointment.getProcedureType().getId())
+        ));
+
         appointment.setCreatedAt(LocalDateTime.now());
         appointment = appointmentRepository.save(appointment);
         return new AppointmentDTO(appointment);

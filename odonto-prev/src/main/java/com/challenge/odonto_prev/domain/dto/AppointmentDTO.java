@@ -25,8 +25,9 @@ public class AppointmentDTO {
     @NotNull
     private Long userId;
     private Long clinicId;
+    private Long procedureValidationId;
     @NotNull
-    private Long procedureOdontoId;
+    private Long procedureTypeId;
 
     public AppointmentDTO(Appointment appointment) {
         this.id = appointment.getId();
@@ -36,6 +37,7 @@ public class AppointmentDTO {
         this.patientId = appointment.getPatient().getId();
         this.userId = appointment.getUser().getId();
         this.clinicId = appointment.getClinic().getId();
-        this.procedureOdontoId = appointment.getProcedureOdonto().getId();
+        this.procedureValidationId = appointment.getProcedureValidation().getId();
+        this.procedureTypeId = appointment.getProcedureType().getId();
     }
 }
