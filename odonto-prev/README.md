@@ -62,6 +62,10 @@ realizar o login para obter o token JWT e inseri-lo no Authorization das requisi
 
 ### Consultas (`/appointments`)
 - **POST** `/appointments`
+- **GET** `/appointments`
+- 
+### Tipos de Procedimentos (`/proceduresType`)
+- **GET** `/proceduresType`
 
 ## Diagrama de Entidade-Relacionamento (DER)
 
