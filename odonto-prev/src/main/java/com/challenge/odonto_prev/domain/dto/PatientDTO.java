@@ -25,7 +25,7 @@ public class PatientDTO {
     private Long numCard;
     private LocalDateTime createdAt;
 
-    public PatientDTO(Patient patient){
+    public PatientDTO(Patient patient) {
         this.id = patient.getId();
         this.name = patient.getName();
         this.rg = patient.getRg();

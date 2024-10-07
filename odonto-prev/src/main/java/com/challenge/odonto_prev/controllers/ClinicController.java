@@ -17,12 +17,12 @@ public class ClinicController {
     private ClinicService clinicService;
 
     @PostMapping
-    public ResponseEntity<ClinicDTO> insert(@RequestBody @Valid ClinicDTO clinicDTO){
+    public ResponseEntity<ClinicDTO> insert(@RequestBody @Valid ClinicDTO clinicDTO) {
         return ResponseEntity.ok(clinicService.insert(clinicDTO));
     }
 
     @GetMapping
-    public ResponseEntity<List<ClinicDTO>> findAll(){
+    public ResponseEntity<List<ClinicDTO>> findAll() {
         return ResponseEntity.ok(clinicService.findAll());
     }
 

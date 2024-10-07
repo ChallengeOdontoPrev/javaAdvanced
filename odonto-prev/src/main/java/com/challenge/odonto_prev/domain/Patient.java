@@ -30,7 +30,7 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
 
-    public Patient(PatientDTO patientDTO){
+    public Patient(PatientDTO patientDTO) {
         this.id = patientDTO.getId();
         this.name = patientDTO.getName();
         this.rg = patientDTO.getRg();

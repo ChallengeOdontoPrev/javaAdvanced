@@ -10,6 +10,8 @@ import com.challenge.odonto_prev.infra.security.TokenService;
 import com.challenge.odonto_prev.services.exceptions.InvalidCredentialsException;
 import com.challenge.odonto_prev.services.exceptions.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,7 +33,7 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return this.userService.loadUserByUsername(username);
+        return this.userService.findByEmail(username);
     }
 
     @Transactional(readOnly = true)
@@ -47,7 +49,7 @@ public class AuthService implements UserDetailsService {
 
     @Transactional
     public RegisterResponseDTO signup(RegisterRequestDTO authDTO) {
-        this.userService.findByEmail(authDTO.email())
+        this.userService.loadUserByUsername(authDTO.email())
                 .ifPresent(user -> {
                     throw new UserAlreadyExistsException("Conta já existente com este email.");
                 });
@@ -76,8 +78,7 @@ public class AuthService implements UserDetailsService {
 
     @Transactional
     public void forgotPassword(String email) {
-        User user = userService.findByEmail(email)
-                                  .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o e-mail fornecido."));
+        User user = userService.findByEmail(email);
 
         // Gera o token JWT específico para redefinição de senha
         String token = tokenService.generatePasswordResetToken(user);
@@ -102,13 +103,31 @@ public class AuthService implements UserDetailsService {
 
         // Encontra o usuário pelo e-mail
         UserDTO user = new UserDTO(
-            userService.findByEmail(email)
-                                  .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."))
+                userService.findByEmail(email)
         );
 
         // Atualiza a senha
         user.setPassword(passwordEncoder.encode(newPassword));
         userService.updatePassword(user);
+    }
+
+    public User getCurrentUserEmail() {
+        // Obtém a autenticação do contexto
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            // Obtém o principal, que é o usuário autenticado
+            Object principal = authentication.getPrincipal();
+
+            // Verifica se o principal é uma instância de UserDetails
+            if (principal instanceof UserDetails) {
+                // Retorna o e-mail do usuário autenticado
+                return (User) principal;
+            }
+        }
+
+        // Se não houver autenticação ou o usuário não estiver logado
+        return null;
     }
 
     private void validatePassword(String password, String confirmPassword) {

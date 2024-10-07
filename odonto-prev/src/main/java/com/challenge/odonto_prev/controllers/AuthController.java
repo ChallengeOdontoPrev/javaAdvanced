@@ -1,6 +1,9 @@
 package com.challenge.odonto_prev.controllers;
 
-import com.challenge.odonto_prev.domain.dto.authDTO.*;
+import com.challenge.odonto_prev.domain.dto.authDTO.LoginRequestDTO;
+import com.challenge.odonto_prev.domain.dto.authDTO.LoginResponseDTO;
+import com.challenge.odonto_prev.domain.dto.authDTO.RegisterRequestDTO;
+import com.challenge.odonto_prev.domain.dto.authDTO.RegisterResponseDTO;
 import com.challenge.odonto_prev.services.AuthService;
 import com.challenge.odonto_prev.services.UserService;
 import jakarta.validation.Valid;

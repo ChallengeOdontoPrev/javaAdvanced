@@ -18,18 +18,18 @@ public class PatientService {
     private PatientRepository patientRepository;
 
     @Transactional
-    public PatientDTO insert(PatientDTO patientDTO){
+    public PatientDTO insert(PatientDTO patientDTO) {
         Patient patient = new Patient(patientDTO);
         patient.setCreatedAt(LocalDateTime.now());
         patient = patientRepository.save(patient);
         return new PatientDTO(patient);
     }
 
-    public List<PatientDTO> findAll(){
+    public List<PatientDTO> findAll() {
         return patientRepository.findAll().stream().map(PatientDTO::new).toList();
     }
 
-    public PatientDTO findById(Long id){
+    public PatientDTO findById(Long id) {
         return new PatientDTO(patientRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Paciente não encontrado !!")));
     }
 }

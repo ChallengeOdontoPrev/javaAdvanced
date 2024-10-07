@@ -1,12 +1,8 @@
 package com.challenge.odonto_prev.services;
 
-import com.challenge.odonto_prev.domain.Appointment;
-import com.challenge.odonto_prev.domain.Patient;
-import com.challenge.odonto_prev.domain.User;
+import com.challenge.odonto_prev.domain.*;
 import com.challenge.odonto_prev.domain.dto.AppointmentDTO;
 import com.challenge.odonto_prev.domain.dto.ProcedureValidationDTO;
-import com.challenge.odonto_prev.domain.ProcedureType;
-import com.challenge.odonto_prev.domain.ProcedureValidation;
 import com.challenge.odonto_prev.enums.UserRole;
 import com.challenge.odonto_prev.repositories.AppointmentRepository;
 import com.challenge.odonto_prev.services.exceptions.InvalidCredentialsException;
@@ -36,6 +32,9 @@ public class AppointmentService {
     @Autowired
     private ProcedureTypeService procedureTypeService;
 
+    @Autowired
+    private AuthService authService;
+
     @Transactional
     public AppointmentDTO insert(AppointmentDTO appointmentDTO) {
         Appointment appointment = new Appointment();
@@ -43,7 +42,7 @@ public class AppointmentService {
         appointment.setPatient(new Patient(
                 patientService.findById(appointmentDTO.getPatientId())
         ));
-        User user = new User(userService.findById(appointmentDTO.getUserId()));
+        User user = this.authService.getCurrentUserEmail();
 
         if (user.getRole() != UserRole.DENTISTA) {
             throw new InvalidCredentialsException("O usuário informado não é um dentista");

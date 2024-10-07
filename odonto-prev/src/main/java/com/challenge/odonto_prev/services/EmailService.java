@@ -25,12 +25,12 @@ public class EmailService {
     public void sendPasswordResetEmail(String to, String resetUrl) {
         String subject = "Redefinição de Senha";
         String text = "Olá,\n\n" +
-                      "Recebemos uma solicitação para redefinir sua senha. " +
-                      "Clique no link abaixo para redefinir sua senha:\n" +
-                      resetUrl + "\n\n" +
-                      "Se você não solicitou essa alteração, ignore este e-mail.\n\n" +
-                      "Atenciosamente,\n" +
-                      "Equipe OdontoPrev";
+                "Recebemos uma solicitação para redefinir sua senha. " +
+                "Clique no link abaixo para redefinir sua senha:\n" +
+                resetUrl + "\n\n" +
+                "Se você não solicitou essa alteração, ignore este e-mail.\n\n" +
+                "Atenciosamente,\n" +
+                "Equipe OdontoPrev";
         sendSimpleMessage(to, subject, text);
     }
 }

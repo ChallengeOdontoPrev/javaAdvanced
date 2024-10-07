@@ -16,7 +16,7 @@ public class ProcedureTypeDTO {
     @NotBlank
     private String description;
 
-    public ProcedureTypeDTO(ProcedureType procedureType){
+    public ProcedureTypeDTO(ProcedureType procedureType) {
         this.id = procedureType.getId();
         this.name = procedureType.getName();
         this.description = procedureType.getDescription();

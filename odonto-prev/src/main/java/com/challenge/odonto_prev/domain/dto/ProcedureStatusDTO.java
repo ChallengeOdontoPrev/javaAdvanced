@@ -16,7 +16,7 @@ public class ProcedureStatusDTO {
     @NotBlank
     private String description;
 
-    public ProcedureStatusDTO(ProcedureStatus procedureStatus){
+    public ProcedureStatusDTO(ProcedureStatus procedureStatus) {
         this.id = procedureStatus.getId();
         this.name = procedureStatus.getName();
         this.description = procedureStatus.getDescription();

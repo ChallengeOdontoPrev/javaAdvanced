@@ -22,8 +22,6 @@ public class AppointmentDTO {
     private LocalDateTime createdAt;
     @NotNull
     private Long patientId;
-    @NotNull
-    private Long userId;
     private Long clinicId;
     private Long procedureValidationId;
     @NotNull
@@ -35,7 +33,6 @@ public class AppointmentDTO {
         this.timeAppointment = appointment.getTimeAppointment();
         this.createdAt = appointment.getCreatedAt();
         this.patientId = appointment.getPatient().getId();
-        this.userId = appointment.getUser().getId();
         this.clinicId = appointment.getClinic().getId();
         this.procedureValidationId = appointment.getProcedureValidation().getId();
         this.procedureTypeId = appointment.getProcedureType().getId();

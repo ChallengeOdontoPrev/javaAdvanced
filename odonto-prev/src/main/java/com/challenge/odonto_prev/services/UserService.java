@@ -44,13 +44,13 @@ public class UserService {
         return new UserDTO(this.userRepository.save(user));
     }
 
-    public Optional<User> findByEmail(String email) {
-        return this.userRepository.findByEmail(email);
-    }
-
-    public User loadUserByUsername(String email) {
+    public User findByEmail(String email) {
         return this.userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Conta não encontrada"));
+    }
+
+    public Optional<User> loadUserByUsername(String email) {
+        return this.userRepository.findByEmail(email);
     }
 
     public List<UserDTO> findAll() {

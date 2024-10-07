@@ -16,12 +16,12 @@ public class PatientController {
     private PatientService patientService;
 
     @PostMapping
-    public PatientDTO insert(@RequestBody @Valid PatientDTO patientDTO){
+    public PatientDTO insert(@RequestBody @Valid PatientDTO patientDTO) {
         return patientService.insert(patientDTO);
     }
 
     @GetMapping
-    public List<PatientDTO> findAll(){
+    public List<PatientDTO> findAll() {
         return patientService.findAll();
     }
 

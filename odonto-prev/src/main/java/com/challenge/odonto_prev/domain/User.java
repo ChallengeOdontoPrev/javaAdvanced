@@ -57,7 +57,7 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public User(UserDTO userDTO){
+    public User(UserDTO userDTO) {
         this.id = userDTO.getId();
         this.name = userDTO.getName();
         this.email = userDTO.getEmail();
@@ -67,7 +67,7 @@ public class User implements UserDetails {
         this.createdAt = LocalDateTime.now();
     }
 
-    public User(User user){
+    public User(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();

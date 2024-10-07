@@ -1,7 +1,7 @@
 package com.challenge.odonto_prev.services;
 
-import com.challenge.odonto_prev.domain.dto.ProcedureStatusDTO;
 import com.challenge.odonto_prev.domain.ProcedureStatus;
+import com.challenge.odonto_prev.domain.dto.ProcedureStatusDTO;
 import com.challenge.odonto_prev.repositories.ProcedureStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

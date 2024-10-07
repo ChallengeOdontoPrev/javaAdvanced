@@ -26,18 +26,18 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/reset-password").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/forgot-password").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/clinics").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/clinics").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/auth/reset-password").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/auth/forgot-password").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/clinics").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/clinics").permitAll()
 //                        .requestMatchers(HttpMethod.POST, "/patients").permitAll()
 //                        .requestMatchers(HttpMethod.GET, "/patients").permitAll()
 //                        .requestMatchers(HttpMethod.POST, "/appointments").permitAll()
 //                        .requestMatchers(HttpMethod.GET, "/appointments").permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .anyRequest().authenticated() // Todas as outras requisições precisam de autenticação
+                                .requestMatchers("/h2-console/**").permitAll()
+                                .anyRequest().authenticated() // Todas as outras requisições precisam de autenticação
                 )
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())) // H2 Console
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
