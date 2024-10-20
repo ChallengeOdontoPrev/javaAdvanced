@@ -22,11 +22,12 @@ public class Clinic {
     @Column(unique = true)
     private String cnpj;
     @Column(unique = true)
-    private String address;
-    @Column(unique = true)
     private String phone;
     @Column(unique = true)
     private String email;
+
+    @OneToOne
+    private Address address;
 
     @OneToMany(mappedBy = "clinic")
     private List<Appointment> appointments;
@@ -38,7 +39,6 @@ public class Clinic {
         this.id = clinicDTO.getId();
         this.name = clinicDTO.getName();
         this.cnpj = clinicDTO.getCnpj();
-        this.address = clinicDTO.getAddress();
         this.phone = clinicDTO.getPhone();
         this.email = clinicDTO.getEmail();
     }
