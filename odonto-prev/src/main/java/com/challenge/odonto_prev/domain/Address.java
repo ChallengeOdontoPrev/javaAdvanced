@@ -16,7 +16,7 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String street;
-    private String number;
+    private String num;
     private String city;
     private String state;
     private String zipCode;
@@ -24,10 +24,10 @@ public class Address {
     @OneToOne(mappedBy = "address")
     private Clinic clinic;
 
-    public Address(AddressDTO addressDTO){
+    public Address(AddressDTO addressDTO) {
         this.id = addressDTO.getId();
         this.street = addressDTO.getStreet();
-        this.number = addressDTO.getNumber();
+        this.num = addressDTO.getNumber();
         this.city = addressDTO.getCity();
         this.state = addressDTO.getState();
         this.zipCode = addressDTO.getZipCode();

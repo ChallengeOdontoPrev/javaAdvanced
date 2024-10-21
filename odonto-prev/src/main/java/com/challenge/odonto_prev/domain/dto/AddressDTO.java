@@ -22,10 +22,10 @@ public class AddressDTO {
     @NotBlank(message = "CEP é obrigatório")
     private String zipCode;
 
-    public AddressDTO(Address address){
+    public AddressDTO(Address address) {
         this.id = address.getId();
         this.street = address.getStreet();
-        this.number = address.getNumber();
+        this.number = address.getNum();
         this.city = address.getCity();
         this.state = address.getState();
         this.zipCode = address.getZipCode();

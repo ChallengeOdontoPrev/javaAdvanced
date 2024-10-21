@@ -45,4 +45,14 @@ public class ProcedureValidationService {
         return new ProcedureValidationDTO(procedureValidationRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Procedimento não encontrado !!")));
     }
+
+    @Transactional
+    public ProcedureValidationDTO updateStatus(Long id, String status) {
+        ProcedureValidation procedureValidation = new ProcedureValidation(this.findById(id));
+        procedureValidation.setProcedureStatus(new ProcedureStatus(
+                procedureStatusService.findByName(status)
+        ));
+        procedureValidation = procedureValidationRepository.save(procedureValidation);
+        return new ProcedureValidationDTO(procedureValidation);
+    }
 }

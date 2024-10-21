@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class AppointmentService {
@@ -66,8 +67,22 @@ public class AppointmentService {
         return new AppointmentDTO(appointment);
     }
 
-    public List<AppointmentDTO> findAll() {
+    public List<AppointmentDTO> findAllDTO() {
         return appointmentRepository.findAll().stream().map(AppointmentDTO::new).toList();
+    }
+
+    public List<Appointment> findAll() {
+        return appointmentRepository.findAll();
+    }
+
+    public Appointment findById(Long id) {
+        return appointmentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Consulta não encontrada"));
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        Appointment appointment = this.findById(id);
+        appointmentRepository.delete(appointment);
     }
 
 }

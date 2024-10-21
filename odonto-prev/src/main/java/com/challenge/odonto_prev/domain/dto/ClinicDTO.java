@@ -1,6 +1,5 @@
 package com.challenge.odonto_prev.domain.dto;
 
-import com.challenge.odonto_prev.domain.Address;
 import com.challenge.odonto_prev.domain.Clinic;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -1,9 +1,11 @@
 package com.challenge.odonto_prev.controllers;
 
 import com.challenge.odonto_prev.domain.dto.AppointmentDTO;
+import com.challenge.odonto_prev.domain.dto.AppointmentResponseDTO;
 import com.challenge.odonto_prev.services.AppointmentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +23,13 @@ public class AppointmentController {
     }
 
     @GetMapping
-    public List<AppointmentDTO> findAll() {
-        return appointmentService.findAll();
+    public List<AppointmentResponseDTO> findAll() {
+        return appointmentService.findAll().stream().map(AppointmentResponseDTO::new).toList();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        appointmentService.deleteById(id);
+        return ResponseEntity.ok("Consulta deletada com sucesso");
     }
 }

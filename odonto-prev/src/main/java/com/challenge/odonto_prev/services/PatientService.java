@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -20,7 +20,7 @@ public class PatientService {
     @Transactional
     public PatientDTO insert(PatientDTO patientDTO) {
         Patient patient = new Patient(patientDTO);
-        patient.setCreatedAt(LocalDateTime.now());
+        patient.setCreatedAt(LocalDate.now());
         patient = patientRepository.save(patient);
         return new PatientDTO(patient);
     }
