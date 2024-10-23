@@ -83,6 +83,7 @@ public class AppointmentService {
     public void deleteById(Long id) {
         Appointment appointment = this.findById(id);
         appointmentRepository.delete(appointment);
+        procedureValidationService.delete(appointment.getProcedureValidation());
     }
 
 }

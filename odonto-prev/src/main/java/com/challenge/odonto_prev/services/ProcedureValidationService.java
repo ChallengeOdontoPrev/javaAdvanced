@@ -55,4 +55,9 @@ public class ProcedureValidationService {
         procedureValidation = procedureValidationRepository.save(procedureValidation);
         return new ProcedureValidationDTO(procedureValidation);
     }
+
+    @Transactional
+    public void delete(ProcedureValidation procedureValidation){
+        this.procedureValidationRepository.delete(procedureValidation);
+    }
 }
