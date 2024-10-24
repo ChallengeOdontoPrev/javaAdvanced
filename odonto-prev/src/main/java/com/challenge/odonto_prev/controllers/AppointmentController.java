@@ -1,5 +1,6 @@
 package com.challenge.odonto_prev.controllers;
 
+import com.challenge.odonto_prev.domain.Appointment;
 import com.challenge.odonto_prev.domain.dto.AppointmentDTO;
 import com.challenge.odonto_prev.domain.dto.AppointmentResponseDTO;
 import com.challenge.odonto_prev.services.AppointmentService;
@@ -9,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(path = "/appointments")
@@ -23,8 +27,24 @@ public class AppointmentController {
     }
 
     @GetMapping
-    public List<AppointmentResponseDTO> findAll() {
-        return appointmentService.findAll().stream().map(AppointmentResponseDTO::new).toList();
+    public ResponseEntity<List<AppointmentResponseDTO>> findAll() {
+        List<AppointmentResponseDTO> appointments = appointmentService.findAll().stream().map(AppointmentResponseDTO::new).toList();
+        if (appointments.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            for (AppointmentResponseDTO appointment : appointments) {
+                Long id = appointment.getId();
+                appointment.add(linkTo(methodOn(AppointmentController.class).findById(id)).withSelfRel());
+            }
+            return ResponseEntity.ok(appointments);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AppointmentResponseDTO> findById(@PathVariable Long id) {
+        AppointmentResponseDTO appointment = new AppointmentResponseDTO(appointmentService.findById(id));
+        appointment.add(linkTo(methodOn(AppointmentController.class).findAll()).withRel("all-appointments"));
+        return ResponseEntity.ok(appointment);
     }
 
     @DeleteMapping("/{id}")

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_appointment")
-public class Appointment {
+public class Appointment extends RepresentationModel<Appointment> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
