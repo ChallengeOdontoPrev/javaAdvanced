@@ -22,7 +22,7 @@ public class ProcedureValidationController {
     }
 
     @PatchMapping("/{id}")
-    public ProcedureValidationDTO updateStatus(@PathVariable @NotNull Long id, @RequestParam @NotBlank String status) {
+    public ProcedureValidationDTO updateStatus(@PathVariable Long id, @RequestParam String status) {
         return procedureValidationService.updateStatus(id, status);
     }
 }

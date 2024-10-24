@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +31,7 @@ public class UserService {
         user.setClinic(new Clinic(
                 this.clinicService.findById(userDTO.getClinicId())
         ));
-        user.setCreatedAt(LocalDateTime.now());
+        user.setCreatedAt(LocalDate.now());
         user = userRepository.save(user);
         return new UserDTO(user);
     }

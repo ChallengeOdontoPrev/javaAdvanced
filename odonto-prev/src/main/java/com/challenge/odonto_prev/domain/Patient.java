@@ -1,7 +1,10 @@
 package com.challenge.odonto_prev.domain;
 
 import com.challenge.odonto_prev.domain.dto.PatientDTO;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,27 +17,20 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_patient")
-public class Patient {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    @Column(unique = true)
-    private String rg;
-    private LocalDate birthDate;
+public class Patient extends People {
+
     @Column(unique = true)
     private Long numCard;
-    private LocalDate createdAt;
 
     @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
 
     public Patient(PatientDTO patientDTO) {
-        this.id = patientDTO.getId();
-        this.name = patientDTO.getName();
-        this.rg = patientDTO.getRg();
-        this.birthDate = patientDTO.getBirthDate();
+        this.setId(patientDTO.getId());
+        this.setName(patientDTO.getName());
+        this.setRg(patientDTO.getRg());
+        this.setBirthDate(patientDTO.getBirthDate());
         this.numCard = patientDTO.getNumCard();
-        this.createdAt = LocalDate.now();
+        this.setCreatedAt(LocalDate.now());
     }
 }
