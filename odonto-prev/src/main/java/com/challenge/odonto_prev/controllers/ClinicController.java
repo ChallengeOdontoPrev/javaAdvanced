@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping(path = "/clinics")
 public class ClinicController {
@@ -18,12 +21,16 @@ public class ClinicController {
 
     @PostMapping
     public ResponseEntity<ClinicDTO> insert(@RequestBody @Valid ClinicDTO clinicDTO) {
-        return ResponseEntity.ok(clinicService.insert(clinicDTO));
+        ClinicDTO clinic = clinicService.insert(clinicDTO);
+        clinic.add(linkTo(methodOn(ClinicController.class).findAll()).withRel("find all"));
+        return ResponseEntity.ok(clinic);
     }
 
     @GetMapping
     public ResponseEntity<List<ClinicDTO>> findAll() {
-        return ResponseEntity.ok(clinicService.findAll());
+        List<ClinicDTO> clinics = clinicService.findAll();
+        clinics.forEach(clinic -> clinic.add(linkTo(methodOn(ClinicController.class).insert(new ClinicDTO())).withRel("Insert")));
+        return ResponseEntity.ok(clinics);
     }
 
 }

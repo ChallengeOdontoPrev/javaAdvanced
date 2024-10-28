@@ -7,11 +7,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ClinicDTO {
+public class ClinicDTO extends RepresentationModel<ClinicDTO> {
     private Long id;
     @NotBlank
     private String name;

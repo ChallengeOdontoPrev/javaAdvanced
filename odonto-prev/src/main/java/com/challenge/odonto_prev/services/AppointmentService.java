@@ -67,10 +67,6 @@ public class AppointmentService {
         return new AppointmentDTO(appointment);
     }
 
-    public List<AppointmentDTO> findAllDTO() {
-        return appointmentRepository.findAll().stream().map(AppointmentDTO::new).toList();
-    }
-
     public List<Appointment> findAll() {
         return appointmentRepository.findAll();
     }

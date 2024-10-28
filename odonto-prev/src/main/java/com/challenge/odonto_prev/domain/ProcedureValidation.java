@@ -30,4 +30,13 @@ public class ProcedureValidation {
         this.imgUrlInitial = procedureValidationDTO.getImgUrlInitial();
         this.imgUrlFinal = procedureValidationDTO.getImgUrlFinal();
     }
+
+    public ProcedureValidation(ProcedureValidation procedureValidation) {
+        this.id = procedureValidation.getId();
+        this.imgUrlInitial = procedureValidation.getImgUrlInitial();
+        this.imgUrlFinal = procedureValidation.getImgUrlFinal();
+        this.appointment = procedureValidation.getAppointment();
+        this.procedureType = procedureValidation.getProcedureType();
+        this.procedureStatus = procedureValidation.getProcedureStatus();
+    }
 }

@@ -6,13 +6,14 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PatientDTO {
+public class PatientDTO extends RepresentationModel<PatientDTO> {
     private Long id;
     @NotBlank
     private String name;

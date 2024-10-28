@@ -5,11 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProcedureStatusDTO {
+public class ProcedureStatusDTO extends RepresentationModel<ProcedureStatusDTO> {
     private Long id;
     @NotBlank
     private String name;

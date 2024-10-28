@@ -1,5 +1,6 @@
 package com.challenge.odonto_prev.services;
 
+import com.challenge.odonto_prev.controllers.ProcedureStatusController;
 import com.challenge.odonto_prev.domain.ProcedureStatus;
 import com.challenge.odonto_prev.domain.ProcedureType;
 import com.challenge.odonto_prev.domain.ProcedureValidation;
@@ -11,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class ProcedureValidationService {
@@ -48,16 +52,20 @@ public class ProcedureValidationService {
 
     @Transactional
     public ProcedureValidationDTO updateStatus(Long id, String status) {
-        ProcedureValidation procedureValidation = new ProcedureValidation(this.findById(id));
+        ProcedureValidation procedureValidation = new ProcedureValidation(
+                        this.procedureValidationRepository.findById(id)
+                                .orElseThrow(() -> new NoSuchElementException("Procedimento não encontrado !!"))
+                );
         procedureValidation.setProcedureStatus(new ProcedureStatus(
                 procedureStatusService.findByName(status)
         ));
         procedureValidation = procedureValidationRepository.save(procedureValidation);
+
         return new ProcedureValidationDTO(procedureValidation);
     }
 
     @Transactional
-    public void delete(ProcedureValidation procedureValidation){
+    public void delete(ProcedureValidation procedureValidation) {
         this.procedureValidationRepository.delete(procedureValidation);
     }
 }

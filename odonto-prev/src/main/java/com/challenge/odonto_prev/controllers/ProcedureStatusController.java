@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/proceduresStatus")
 public class ProcedureStatusController {
@@ -18,11 +21,17 @@ public class ProcedureStatusController {
 
     @PostMapping
     public ResponseEntity<ProcedureStatusDTO> insert(@RequestBody @Valid ProcedureStatusDTO procedureStatusDTO) {
-        return ResponseEntity.ok(procedureStatusService.insert(procedureStatusDTO));
+        ProcedureStatusDTO procedureStatus = procedureStatusService.insert(procedureStatusDTO);
+        procedureStatus.add(linkTo(methodOn(ProcedureStatusController.class).findAll()).withRel("find all"));
+        return ResponseEntity.ok(procedureStatus);
     }
 
     @GetMapping
-    public List<ProcedureStatusDTO> findAll() {
-        return procedureStatusService.findAll();
+    public ResponseEntity<List<ProcedureStatusDTO>> findAll() {
+        List<ProcedureStatusDTO> proceduresStatus = procedureStatusService.findAll();
+        proceduresStatus.forEach(procedureStatus ->
+                        procedureStatus.add(linkTo(methodOn(ProcedureStatusController.class).insert(new ProcedureStatusDTO())).withRel("Insert"))
+        );
+        return ResponseEntity.ok(proceduresStatus);
     }
 }

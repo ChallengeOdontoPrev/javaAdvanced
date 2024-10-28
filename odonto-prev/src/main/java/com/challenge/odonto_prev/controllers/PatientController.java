@@ -4,9 +4,13 @@ import com.challenge.odonto_prev.domain.dto.PatientDTO;
 import com.challenge.odonto_prev.services.PatientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/patients")
@@ -16,13 +20,18 @@ public class PatientController {
     private PatientService patientService;
 
     @PostMapping
-    public PatientDTO insert(@RequestBody @Valid PatientDTO patientDTO) {
-        return patientService.insert(patientDTO);
+    public ResponseEntity<PatientDTO> insert(@RequestBody @Valid PatientDTO patientDTO) {
+        PatientDTO patient = patientService.insert(patientDTO);
+        patient.add(linkTo(methodOn(PatientController.class).findAll()).withRel("find all"));
+        return ResponseEntity.ok(patient);
     }
 
     @GetMapping
-    public List<PatientDTO> findAll() {
-        return patientService.findAll();
+    public ResponseEntity<List<PatientDTO>> findAll() {
+        List<PatientDTO> patients = patientService.findAll();
+        patients.forEach(patient -> patient.add(linkTo(methodOn(PatientController.class).insert(new PatientDTO())).withRel("Insert")));
+        return ResponseEntity.ok(patients);
     }
+
 
 }

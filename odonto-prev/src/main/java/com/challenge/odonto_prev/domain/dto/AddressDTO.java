@@ -5,11 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddressDTO {
+public class AddressDTO extends RepresentationModel<AddressDTO> {
     private Long id;
     @NotBlank(message = "Rua é obrigatória")
     private String street;
