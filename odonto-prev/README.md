@@ -37,7 +37,7 @@ Serviço de Validação de Consultas Odontológicas
 1. **Importe o arquivo de coleção do Postman:**
    ```ChallengeOdontoPrev.postman_collection.json```
 2. **Importe o arquivo de ambiente do Postman:**
-   ```Auth.postman_environment.json```
+   ```auth.postman_environment.json```
 3. **Execute as requisições do Postman para testar a API**
 
 ## Endpoints da API Spring Boot:
@@ -59,15 +59,16 @@ realizar o login para obter o token JWT e inseri-lo no Authorization das requisi
   **Descrição:** Cria uma nova conta para um usuário.
   ```json
   {
-    "email": "kaua.silveira@gmail.com",
-    "password": "kaua2011",
-    "name": "kaua",
-    "role": "DENTISTA",
-    "cro": "48569874",
-    "clinicId": 161
-  } 
+    "email":"kauiis.a.silveira@gmail.com",
+    "password":"kaua123",
+    "name":"kaua",
+    "rg":"52415678578",
+    "birthDate":"2004-11-20",
+    "role":"DENTISTA",
+    "cro":"48567584",
+    "clinicId":201
+  }
   ```
-  
 
 - **POST** `/auth/forgot-password`
 
@@ -81,7 +82,7 @@ realizar o login para obter o token JWT e inseri-lo no Authorization das requisi
 - **POST** `/auth/reset-password`
 
     **Descrição:** Redefine a senha do usuário com base no token de autenticação.
-	
+    
     **Query Params:**
 
     **token:** Token JWT recebido no e-mail.
@@ -95,62 +96,104 @@ realizar o login para obter o token JWT e inseri-lo no Authorization das requisi
 ### Clínicas (`/clinics`)
 - **GET** `/clinics`
 
-	**Descrição:** Retorna a lista de clínicas disponíveis.
+    **Descrição:** Retorna a lista de clínicas disponíveis.
 
 - **POST** `/clinics`
 
-	**Descrição:** Insere uma nova clínica.
-	```json
-	{
-	  "name": "Clinica Odonto Alvorada",
-	  "cnpj": "9785461/546164-78",
-	  "address": {
-	    "street": "Rua pacheco",
-	    "number": "92",
-	    "city": "São Paulo",
-	    "state": "SP",
-	    "zipCode": "03728-064"
-	  },
-	  "phone": "11 975122387",
-	  "email": "OdontoAlvoradas@gmail.com"
-	}
+    **Descrição:** Insere uma nova clínica.
+    ```json
+    {
+    "name":"Clinica Odonto Alvorada",
+    "cnpj":"9785461/546164-78",
+    "address": {
+        "street":"Rua pacheco",
+        "number":"92",
+        "city":"São Paulo",
+        "state":"SP",
+        "zipCode":"03728-064"
+    },
+    "phone":"11 975122387",
+    "email":"OdontoAlvoradas@gmail.com"
+    }
 
 ### Pacientes (`/patients`)
 - **GET** `/patients`
 
-	**Descrição:** Retorna a lista de pacientes cadastrados.
+    **Descrição:** Retorna a lista de pacientes cadastrados.
 
 - **POST** `/patients`
 
-	**Descrição:** Insere um novo paciente.
-	```json
-	{
-	  "name": "Kaua Almeida",
-	  "rg": "758924780",
-	  "birthDate": "2004-11-20",
-	  "numCard": 7852145
-	}
+    **Descrição:** Insere um novo paciente.
+    ```json
+    {
+        "name": "Kaua Almeida",
+        "rg": "758924780",
+        "birthDate": "2004-11-20",
+        "numCard": 7852145
+    }
 
 ### Consultas (`/appointments`)
 - **GET** `/appointments`
 
-	**Descrição:** Retorna todas as consultas agendadas.
+    **Descrição:** Retorna todas as consultas agendadas.
+
+- **GET** `/appointments/{id}`
+
+    **Descrição:** Retorna uma consulta a partir do seu id passado como PathVariable
+
+- **DELETE** `/appointments/{id}`
+
+    **Descrição:** Deleta uma consulta a partir do seu id passado como PathVariable
 
 - **POST** `/appointments`
 
-	**Descrição:** Cria uma nova consulta.
-	```json
-	{
-	  "dateAppointment": "2024-10-01",
-	  "timeAppointment": "14:30",
-	  "patientId": 141,
-	  "procedureTypeId": 65
-	}
+    **Descrição:** Cria uma nova consulta.
+    ```json
+    {
+        "dateAppointment": "2024-10-01",
+        "timeAppointment": "14:30",
+        "patientId": 141,
+        "procedureTypeId": 65
+    }
 
 ### Tipos de Procedimentos (`/proceduresType`)
 - **GET** `/proceduresType`
 
-	**Descrição:** Retorna os tipos de procedimentos disponíveis.
+    **Descrição:** Retorna os tipos de procedimentos disponíveis.
+
+- **POST** `/proceduresType`
+
+    **Descrição:** Insere um tipo de procedimento.
+    ```json
+    {
+        "name":"Instalação de Aparelho dental",
+        "description":"Instalação de Aparelho dental na arcada dentaria"
+    }
+
+### Status do Procedimento (`/proceduresStatus`)
+- **GET** `/proceduresStatus`
+
+    **Descrição:** Retorna os status de procedimentos disponíveis.
+
+- **POST** `/proceduresStatus`
+
+    **Descrição:** Insere um status de procedimento.
+    ```json
+    {
+        "name":"VALIDADO",
+        "description":"VALIDADO"
+    }
+
+### Validação do Procedimento (`/proceduresValidation`)
+- **GET** `/proceduresValidation`
+
+    **Descrição:** Retorna as validações de procedimentos.
+
+- **PATCH** `/proceduresValidation/{id}?status=VALIDADO`
+
+    **Descrição:** Atualiza o status de validação de um procedimento, a partir do id passado 
+    como PathVariable e o status por RequestParam.
+
 
 ## Diagrama de Entidade-Relacionamento (DER)
 
