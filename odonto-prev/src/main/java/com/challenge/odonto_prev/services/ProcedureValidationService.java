@@ -4,6 +4,7 @@ import com.challenge.odonto_prev.controllers.ProcedureStatusController;
 import com.challenge.odonto_prev.domain.ProcedureStatus;
 import com.challenge.odonto_prev.domain.ProcedureType;
 import com.challenge.odonto_prev.domain.ProcedureValidation;
+import com.challenge.odonto_prev.domain.dto.ProcedureStatusDTO;
 import com.challenge.odonto_prev.domain.dto.ProcedureValidationDTO;
 import com.challenge.odonto_prev.repositories.ProcedureValidationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,19 @@ public class ProcedureValidationService {
     @Transactional
     public ProcedureValidationDTO insert(ProcedureValidationDTO procedureValidationDTO, Long procedureTypeId) {
         ProcedureValidation procedureValidation = new ProcedureValidation(procedureValidationDTO);
-        procedureValidation.setProcedureStatus(new ProcedureStatus(
+
+        if (procedureStatusService.findDefaultStatus("PENDENTE") == null){
+            ProcedureStatusDTO procedureStatus = new ProcedureStatusDTO();
+            procedureStatus.setName("PENDENTE");
+            procedureStatus.setDescription("Procedimento pendente de validação");
+            procedureStatus = procedureStatusService.insert(procedureStatus);
+            procedureValidation.setProcedureStatus(new ProcedureStatus(procedureStatus));
+        } else {
+            procedureValidation.setProcedureStatus(new ProcedureStatus(
                 procedureStatusService.findByName("PENDENTE")
-        ));
+            ));
+        }
+
         procedureValidation.setProcedureType(new ProcedureType(
                 this.procedureTypeService.findById(procedureTypeId)
         ));

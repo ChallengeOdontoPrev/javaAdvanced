@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ProcedureStatusService {
@@ -35,5 +36,10 @@ public class ProcedureStatusService {
     public ProcedureStatusDTO findByName(String name) {
         return new ProcedureStatusDTO(procedureStatusRepository.findByName(name)
                 .orElseThrow(() -> new NoSuchElementException("Status de Procedimento não encontrado !!")));
+    }
+
+    public ProcedureStatus findDefaultStatus(String name) {
+        return procedureStatusRepository.findByName(name)
+                .orElse(null);
     }
 }
