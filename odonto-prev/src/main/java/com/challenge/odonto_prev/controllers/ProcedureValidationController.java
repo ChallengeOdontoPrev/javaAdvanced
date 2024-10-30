@@ -1,7 +1,6 @@
 package com.challenge.odonto_prev.controllers;
 
 import com.challenge.odonto_prev.domain.dto.ProcedureValidationDTO;
-import com.challenge.odonto_prev.services.ProcedureTypeService;
 import com.challenge.odonto_prev.services.ProcedureValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +22,9 @@ public class ProcedureValidationController {
     public ResponseEntity<List<ProcedureValidationDTO>> findAll() {
         List<ProcedureValidationDTO> proceduresValidation = procedureValidationService.findAll();
         proceduresValidation.forEach(procedureValidation -> {
-                procedureValidation.add(linkTo(methodOn(ProcedureValidationController.class).updateStatus(procedureValidation.getId(), "NEW-STATUS")).withRel("Update Status"));
-                procedureValidation.getProcedureStatus().add(linkTo(methodOn(ProcedureStatusController.class).findAll()).withRel("find all"));
-                procedureValidation.getProcedureType().add(linkTo(methodOn(ProcedureTypeController.class).findAll()).withRel("find all"));
+            procedureValidation.add(linkTo(methodOn(ProcedureValidationController.class).updateStatus(procedureValidation.getId(), "NEW-STATUS")).withRel("Update Status"));
+            procedureValidation.getProcedureStatus().add(linkTo(methodOn(ProcedureStatusController.class).findAll()).withRel("find all"));
+            procedureValidation.getProcedureType().add(linkTo(methodOn(ProcedureTypeController.class).findAll()).withRel("find all"));
         });
         return ResponseEntity.ok(proceduresValidation);
     }

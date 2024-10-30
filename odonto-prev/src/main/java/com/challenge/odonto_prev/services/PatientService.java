@@ -32,4 +32,8 @@ public class PatientService {
     public PatientDTO findById(Long id) {
         return new PatientDTO(patientRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Paciente não encontrado !!")));
     }
+
+    public PatientDTO findByRg(String rg) {
+        return new PatientDTO(patientRepository.findByRg(rg).orElseThrow(() -> new NoSuchElementException("Paciente não encontrado !!")));
+    }
 }

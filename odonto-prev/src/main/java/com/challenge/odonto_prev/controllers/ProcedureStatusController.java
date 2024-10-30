@@ -30,7 +30,7 @@ public class ProcedureStatusController {
     public ResponseEntity<List<ProcedureStatusDTO>> findAll() {
         List<ProcedureStatusDTO> proceduresStatus = procedureStatusService.findAll();
         proceduresStatus.forEach(procedureStatus ->
-                        procedureStatus.add(linkTo(methodOn(ProcedureStatusController.class).insert(new ProcedureStatusDTO())).withRel("Insert"))
+                procedureStatus.add(linkTo(methodOn(ProcedureStatusController.class).insert(new ProcedureStatusDTO())).withRel("Insert"))
         );
         return ResponseEntity.ok(proceduresStatus);
     }

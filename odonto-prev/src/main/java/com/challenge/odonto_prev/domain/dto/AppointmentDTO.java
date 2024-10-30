@@ -24,6 +24,8 @@ public class AppointmentDTO extends RepresentationModel<AppointmentDTO> {
     @NotNull
     private Long patientId;
     private Long clinicId;
+    @NotNull
+    private Long dentistId;
     private Long procedureValidationId;
     @NotNull
     private Long procedureTypeId;
@@ -35,6 +37,7 @@ public class AppointmentDTO extends RepresentationModel<AppointmentDTO> {
         this.createdAt = appointment.getCreatedAt();
         this.patientId = appointment.getPatient().getId();
         this.clinicId = appointment.getClinic().getId();
+        this.dentistId = appointment.getUser().getId();
         this.procedureValidationId = appointment.getProcedureValidation().getId();
         this.procedureTypeId = appointment.getProcedureType().getId();
     }

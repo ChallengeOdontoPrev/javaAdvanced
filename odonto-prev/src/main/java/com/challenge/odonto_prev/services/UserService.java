@@ -3,6 +3,7 @@ package com.challenge.odonto_prev.services;
 import com.challenge.odonto_prev.domain.Clinic;
 import com.challenge.odonto_prev.domain.User;
 import com.challenge.odonto_prev.domain.dto.UserDTO;
+import com.challenge.odonto_prev.enums.UserRole;
 import com.challenge.odonto_prev.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,4 +62,11 @@ public class UserService {
         return this.userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
+
+    public User findByRole(UserRole role) {
+        return this.userRepository.findByRole(role)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+    }
+
+
 }

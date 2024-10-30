@@ -3,9 +3,7 @@ package com.challenge.odonto_prev.services;
 import com.challenge.odonto_prev.domain.*;
 import com.challenge.odonto_prev.domain.dto.AppointmentDTO;
 import com.challenge.odonto_prev.domain.dto.ProcedureValidationDTO;
-import com.challenge.odonto_prev.enums.UserRole;
 import com.challenge.odonto_prev.repositories.AppointmentRepository;
-import com.challenge.odonto_prev.services.exceptions.InvalidCredentialsException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,11 +41,8 @@ public class AppointmentService {
         appointment.setPatient(new Patient(
                 patientService.findById(appointmentDTO.getPatientId())
         ));
-        User user = this.authService.getCurrentUserEmail();
 
-        if (user.getRole() != UserRole.DENTISTA) {
-            throw new InvalidCredentialsException("O usuário informado não é um dentista");
-        }
+        User user = this.userService.findById(appointmentDTO.getDentistId());
 
         appointment.setUser(user);
         appointment.setClinic(user.getClinic());
@@ -69,6 +64,10 @@ public class AppointmentService {
 
     public List<Appointment> findAll() {
         return appointmentRepository.findAll();
+    }
+
+    public List<Appointment> findAllByStatus(String status) {
+        return appointmentRepository.findAllByStatus(status);
     }
 
     public Appointment findById(Long id) {

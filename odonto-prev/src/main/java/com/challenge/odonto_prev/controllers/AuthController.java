@@ -1,9 +1,11 @@
 package com.challenge.odonto_prev.controllers;
 
+import com.challenge.odonto_prev.domain.dto.UserDTO;
 import com.challenge.odonto_prev.domain.dto.authDTO.LoginRequestDTO;
 import com.challenge.odonto_prev.domain.dto.authDTO.LoginResponseDTO;
 import com.challenge.odonto_prev.domain.dto.authDTO.RegisterRequestDTO;
 import com.challenge.odonto_prev.domain.dto.authDTO.RegisterResponseDTO;
+import com.challenge.odonto_prev.enums.UserRole;
 import com.challenge.odonto_prev.services.AuthService;
 import com.challenge.odonto_prev.services.UserService;
 import jakarta.validation.Valid;
@@ -35,6 +37,11 @@ public class AuthController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{email}")
                 .buildAndExpand(account.email()).toUri();
         return ResponseEntity.created(uri).body(account);
+    }
+
+    @GetMapping
+    public ResponseEntity<UserDTO> findByRole(@RequestParam UserRole role) {
+        return ResponseEntity.ok(new UserDTO(userService.findByRole(role)));
     }
 
     // Endpoint para solicitar a redefinição de senha

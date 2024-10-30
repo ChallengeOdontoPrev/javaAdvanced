@@ -25,6 +25,7 @@ public class AppointmentController {
         AppointmentDTO appointment = appointmentService.insert(appointmentDTO);
         appointment.add(linkTo(methodOn(AppointmentController.class).findById(appointment.getId())).withSelfRel());
         appointment.add(linkTo(methodOn(AppointmentController.class).findAll()).withRel("find all"));
+        appointment.add(linkTo(methodOn(AppointmentController.class).findAllByStatus("Agendada")).withRel("find all by status"));
         appointment.add(linkTo(methodOn(AppointmentController.class).delete(appointment.getId())).withRel("delete by id"));
         return ResponseEntity.ok(appointment);
     }
@@ -34,6 +35,19 @@ public class AppointmentController {
         List<AppointmentResponseDTO> appointments = appointmentService.findAll().stream().map(AppointmentResponseDTO::new).toList();
         appointments.forEach(appointment -> {
             appointment.add(linkTo(methodOn(AppointmentController.class).findById(appointment.getId())).withSelfRel());
+            appointment.add(linkTo(methodOn(AppointmentController.class).insert(new AppointmentDTO())).withRel("Insert"));
+            appointment.add(linkTo(methodOn(AppointmentController.class).delete(appointment.getId())).withRel("delete by id"));
+        });
+        return ResponseEntity.ok(appointments);
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<List<AppointmentResponseDTO>> findAllByStatus(@RequestParam String status) {
+        List<AppointmentResponseDTO> appointments = appointmentService.findAllByStatus(status).stream().map(AppointmentResponseDTO::new).toList();
+        appointments.forEach(appointment -> {
+            appointment.add(linkTo(methodOn(AppointmentController.class).findById(appointment.getId())).withSelfRel());
+            appointment.add(linkTo(methodOn(AppointmentController.class).insert(new AppointmentDTO())).withRel("Insert"));
+            appointment.add(linkTo(methodOn(AppointmentController.class).findAll()).withRel("find all"));
             appointment.add(linkTo(methodOn(AppointmentController.class).delete(appointment.getId())).withRel("delete by id"));
         });
         return ResponseEntity.ok(appointments);
@@ -43,6 +57,7 @@ public class AppointmentController {
     public ResponseEntity<AppointmentResponseDTO> findById(@PathVariable Long id) {
         AppointmentResponseDTO appointment = new AppointmentResponseDTO(appointmentService.findById(id));
         appointment.add(linkTo(methodOn(AppointmentController.class).findAll()).withRel("all-appointments"));
+        appointment.add(linkTo(methodOn(AppointmentController.class).insert(new AppointmentDTO())).withRel("Insert"));
         appointment.add(linkTo(methodOn(AppointmentController.class).delete(id)).withRel("delete by id"));
         return ResponseEntity.ok(appointment);
     }

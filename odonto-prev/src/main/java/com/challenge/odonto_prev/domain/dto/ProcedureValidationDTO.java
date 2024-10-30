@@ -1,7 +1,5 @@
 package com.challenge.odonto_prev.domain.dto;
 
-import com.challenge.odonto_prev.domain.ProcedureStatus;
-import com.challenge.odonto_prev.domain.ProcedureType;
 import com.challenge.odonto_prev.domain.ProcedureValidation;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -26,20 +26,19 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/auth/reset-password").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/auth/forgot-password").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/clinics").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/clinics").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/patients").permitAll()
-//                        .requestMatchers(HttpMethod.GET, "/patients").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/appointments").permitAll()
-//                        .requestMatchers(HttpMethod.GET, "/appointments").permitAll()
-                                .requestMatchers("/h2-console/**").permitAll()
-                                .anyRequest().authenticated() // Todas as outras requisições precisam de autenticação
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/reset-password").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/forgot-password").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/clinics").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/clinics").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/appointments").hasRole("ATENDENTE")
+                        .requestMatchers(HttpMethod.DELETE, "/appointments").hasRole("ATENDENTE")
+                        .requestMatchers(HttpMethod.GET, "/appointments").hasAnyRole("ATENDENTE", "DENTISTA")
+                        .requestMatchers("/h2-console/**").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())) // H2 Console
+                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

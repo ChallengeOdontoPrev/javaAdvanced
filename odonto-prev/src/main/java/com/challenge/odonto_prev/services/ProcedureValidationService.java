@@ -1,10 +1,8 @@
 package com.challenge.odonto_prev.services;
 
-import com.challenge.odonto_prev.controllers.ProcedureStatusController;
 import com.challenge.odonto_prev.domain.ProcedureStatus;
 import com.challenge.odonto_prev.domain.ProcedureType;
 import com.challenge.odonto_prev.domain.ProcedureValidation;
-import com.challenge.odonto_prev.domain.dto.ProcedureStatusDTO;
 import com.challenge.odonto_prev.domain.dto.ProcedureValidationDTO;
 import com.challenge.odonto_prev.repositories.ProcedureValidationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class ProcedureValidationService {
@@ -33,17 +28,11 @@ public class ProcedureValidationService {
     public ProcedureValidationDTO insert(ProcedureValidationDTO procedureValidationDTO, Long procedureTypeId) {
         ProcedureValidation procedureValidation = new ProcedureValidation(procedureValidationDTO);
 
-        if (procedureStatusService.findDefaultStatus("PENDENTE") == null){
-            ProcedureStatusDTO procedureStatus = new ProcedureStatusDTO();
-            procedureStatus.setName("PENDENTE");
-            procedureStatus.setDescription("Procedimento pendente de validação");
-            procedureStatus = procedureStatusService.insert(procedureStatus);
-            procedureValidation.setProcedureStatus(new ProcedureStatus(procedureStatus));
-        } else {
-            procedureValidation.setProcedureStatus(new ProcedureStatus(
-                procedureStatusService.findByName("PENDENTE")
-            ));
-        }
+
+        procedureValidation.setProcedureStatus(new ProcedureStatus(
+                procedureStatusService.findByName("Agendada")
+        ));
+
 
         procedureValidation.setProcedureType(new ProcedureType(
                 this.procedureTypeService.findById(procedureTypeId)
@@ -64,9 +53,9 @@ public class ProcedureValidationService {
     @Transactional
     public ProcedureValidationDTO updateStatus(Long id, String status) {
         ProcedureValidation procedureValidation = new ProcedureValidation(
-                        this.procedureValidationRepository.findById(id)
-                                .orElseThrow(() -> new NoSuchElementException("Procedimento não encontrado !!"))
-                );
+                this.procedureValidationRepository.findById(id)
+                        .orElseThrow(() -> new NoSuchElementException("Procedimento não encontrado !!"))
+        );
         procedureValidation.setProcedureStatus(new ProcedureStatus(
                 procedureStatusService.findByName(status)
         ));

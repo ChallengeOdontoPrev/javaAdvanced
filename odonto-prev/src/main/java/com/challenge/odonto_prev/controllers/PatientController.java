@@ -33,5 +33,13 @@ public class PatientController {
         return ResponseEntity.ok(patients);
     }
 
+    @GetMapping("/{rg}")
+    public ResponseEntity<PatientDTO> findByRg(@PathVariable String rg) {
+        PatientDTO patient = patientService.findByRg(rg);
+        patient.add(linkTo(methodOn(PatientController.class).findAll()).withRel("find all"));
+        patient.add(linkTo(methodOn(PatientController.class).insert(new PatientDTO())).withRel("Insert"));
+        return ResponseEntity.ok(patient);
+    }
+
 
 }
