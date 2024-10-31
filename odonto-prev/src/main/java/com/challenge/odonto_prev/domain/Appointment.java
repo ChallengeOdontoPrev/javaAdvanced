@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate dateAppointment;
-    private LocalTime timeAppointment;
+    private String timeAppointment;
     private LocalDateTime createdAt;
 
     @ManyToOne

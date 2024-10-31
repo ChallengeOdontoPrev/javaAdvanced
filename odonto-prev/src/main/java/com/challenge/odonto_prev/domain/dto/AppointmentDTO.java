@@ -7,9 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class AppointmentDTO extends RepresentationModel<AppointmentDTO> {
     @NotNull
     private LocalDate dateAppointment;
     @NotNull
-    private LocalTime timeAppointment;
+    private String timeAppointment;
     private LocalDateTime createdAt;
     @NotNull
     private Long patientId;
