@@ -28,11 +28,9 @@ public class ProcedureValidationService {
     public ProcedureValidationDTO insert(ProcedureValidationDTO procedureValidationDTO, Long procedureTypeId) {
         ProcedureValidation procedureValidation = new ProcedureValidation(procedureValidationDTO);
 
-
         procedureValidation.setProcedureStatus(new ProcedureStatus(
                 procedureStatusService.findByName("Agendada")
         ));
-
 
         procedureValidation.setProcedureType(new ProcedureType(
                 this.procedureTypeService.findById(procedureTypeId)

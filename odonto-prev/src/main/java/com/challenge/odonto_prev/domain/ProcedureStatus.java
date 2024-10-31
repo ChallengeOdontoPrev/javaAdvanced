@@ -28,4 +28,9 @@ public class ProcedureStatus {
         this.name = procedureStatusDTO.getName();
         this.description = procedureStatusDTO.getDescription();
     }
+
+    public ProcedureStatus(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

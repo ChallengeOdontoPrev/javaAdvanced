@@ -22,4 +22,9 @@ public class ProcedureStatusDTO extends RepresentationModel<ProcedureStatusDTO> 
         this.name = procedureStatus.getName();
         this.description = procedureStatus.getDescription();
     }
+
+    public ProcedureStatusDTO(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }
