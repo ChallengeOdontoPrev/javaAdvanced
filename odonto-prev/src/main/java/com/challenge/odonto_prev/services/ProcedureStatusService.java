@@ -23,6 +23,21 @@ public class ProcedureStatusService {
         return new ProcedureStatusDTO(procedureStatus);
     }
 
+    @Transactional
+    public void insertWithProcedure(ProcedureStatusDTO procedureStatusDTO) {
+        this.procedureStatusRepository.INSERT_PROCEDURE_STATUS(procedureStatusDTO.getName(), procedureStatusDTO.getDescription());
+    }
+
+    @Transactional
+    public void updateWithProcedure(ProcedureStatusDTO procedureStatusDTO) {
+        this.procedureStatusRepository.UPDATE_PROCEDURE_STATUS(procedureStatusDTO.getId(), procedureStatusDTO.getName(), procedureStatusDTO.getDescription());
+    }
+
+    @Transactional
+    public void deleteWithProcedure(Long id) {
+        this.procedureStatusRepository.DELETE_PROCEDURE_STATUS(id);
+    }
+
     public List<ProcedureStatusDTO> findAll() {
         return procedureStatusRepository.findAll().stream().map(ProcedureStatusDTO::new).toList();
     }

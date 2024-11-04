@@ -12,5 +12,22 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     Optional<Patient> findByRg(String rg);
 
     @Procedure(name = "INSERT_PATIENT")
-    void INSERT_PATIENT(@Param("p_birth_date") LocalDate birthdate, @Param("p_num_card") Long num_card, @Param("p_name") String name, @Param("p_rg") String rg);
+    void INSERT_PATIENT(
+            @Param("p_birth_date") LocalDate birthdate,
+            @Param("p_num_card") Long num_card,
+            @Param("p_name") String name,
+            @Param("p_rg") String rg
+    );
+
+    @Procedure(name = "UPDATE_PATIENT")
+    void UPDATE_PATIENT(
+            @Param("p_id") Long id,
+            @Param("p_birth_date") LocalDate birthdate,
+            @Param("p_num_card") Long num_card,
+            @Param("p_name") String name,
+            @Param("p_rg") String rg
+    );
+
+    @Procedure(name = "DELETE_PATIENT")
+    void DELETE_PATIENT(@Param("p_id") Long id);
 }

@@ -30,6 +30,16 @@ public class PatientService {
         this.patientRepository.INSERT_PATIENT(patientDTO.getBirthDate(), patientDTO.getNumCard(), patientDTO.getName(), patientDTO.getRg());
     }
 
+    @Transactional
+    public void updateWithProcedure(PatientDTO patientDTO) {
+        this.patientRepository.UPDATE_PATIENT(patientDTO.getId(), patientDTO.getBirthDate(), patientDTO.getNumCard(), patientDTO.getName(), patientDTO.getRg());
+    }
+
+    @Transactional
+    public void deleteWithProcedure(Long id) {
+        this.patientRepository.DELETE_PATIENT(id);
+    }
+
     public List<PatientDTO> findAll() {
         return patientRepository.findAll().stream().map(PatientDTO::new).toList();
     }

@@ -29,7 +29,19 @@ public class PatientController {
     @PostMapping("/withProcedure")
     public ResponseEntity insertWithProcedure(@RequestBody @Valid PatientDTO patientDTO) {
         this.patientService.insertWithProcedure(patientDTO);
-        return ResponseEntity.ok("FOI");
+        return ResponseEntity.ok("Paciente inserido com sucesso !!");
+    }
+
+    @PutMapping("/withProcedure")
+    public ResponseEntity updateWithProcedure(@RequestBody @Valid PatientDTO patientDTO) {
+        this.patientService.updateWithProcedure(patientDTO);
+        return ResponseEntity.ok("Paciente atualizado com sucesso !!");
+    }
+
+    @DeleteMapping("/withProcedure/{id}")
+    public ResponseEntity deleteWithProcedure(@PathVariable Long id) {
+        this.patientService.deleteWithProcedure(id);
+        return ResponseEntity.ok("Paciente deletado com sucesso !!");
     }
 
     @GetMapping
