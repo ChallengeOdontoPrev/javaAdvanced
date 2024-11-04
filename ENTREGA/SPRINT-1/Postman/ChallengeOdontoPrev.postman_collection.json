@@ -1,0 +1,376 @@
+{
+	"info": {
+		"_postman_id": "bd328fd5-99e0-443c-8eba-0fd10210e0fb",
+		"name": "Challenge OdontoPrev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28043846"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code >= 200 && responseCode.code < 300) {\r",
+									"   var json = JSON.parse(responseBody);\r",
+									"   postman.setEnvironmentVariable('token', json.token);\r",
+									"} "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"kaua.silveira@gmail.com\",\r\n    \"password\":\"kaua2011\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"kaua.silveira@gmail.com\",\r\n    \"password\":\"kaua2011\",\r\n    \"name\":\"kaua\",\r\n    \"role\":\"DENTISTA\",\r\n    \"cro\":\"48569874\",\r\n    \"clinicId\":161\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgotPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/forgot-password?email=ti.kaua.silveira@drummond.com.br",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"forgot-password"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "ti.kaua.silveira@drummond.com.br"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resetPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/reset-password?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJPZG9udG9QcmV2Iiwic3ViIjoidGkua2F1YS5zaWx2ZWlyYUBkcnVtbW9uZC5jb20uYnIiLCJ0eXBlIjoicGFzc3dvcmRfcmVzZXQiLCJleHAiOjE3Mjc0NjI1MzV9.G5fz83Jd4NJYDovDsNIf6KK-zVqRg6cd-mbkuodwX0I&newPassword=kk&confirmNewPassword=kk",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJPZG9udG9QcmV2Iiwic3ViIjoidGkua2F1YS5zaWx2ZWlyYUBkcnVtbW9uZC5jb20uYnIiLCJ0eXBlIjoicGFzc3dvcmRfcmVzZXQiLCJleHAiOjE3Mjc0NjI1MzV9.G5fz83Jd4NJYDovDsNIf6KK-zVqRg6cd-mbkuodwX0I"
+								},
+								{
+									"key": "newPassword",
+									"value": "kk"
+								},
+								{
+									"key": "confirmNewPassword",
+									"value": "kk"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clinic",
+			"item": [
+				{
+					"name": "findAll Clinica",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clinics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clinics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert Clinica",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Clinica Odonto Alvorada\",\r\n    \"cnpj\":\"9785461/546174-78\",\r\n    \"address\": \"Alameda Pacheco, 113\",\r\n    \"phone\":\"11 975120387\",\r\n    \"email\":\"OdontoAlvorada@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/clinics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clinics"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patient",
+			"item": [
+				{
+					"name": "findAll Patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/patients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert Patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Kaua Almeida\",\r\n    \"rg\":\"758924780\",\r\n    \"birthDate\":\"2004-11-20\",\r\n    \"numCard\": 7852145\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/patients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"patients"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Consulta",
+			"item": [
+				{
+					"name": "insert Appointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"dateAppointment\": \"2024-10-01\",\r\n  \"timeAppointment\": \"14:30\",\r\n  \"patientId\": 141,\r\n  \"procedureTypeId\": 65\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/appointments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Procedure Type",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/proceduresType",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proceduresType"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

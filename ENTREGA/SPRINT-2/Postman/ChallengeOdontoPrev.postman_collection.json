@@ -1,0 +1,706 @@
+{
+	"info": {
+		"_postman_id": "bd328fd5-99e0-443c-8eba-0fd10210e0fb",
+		"name": "Challenge OdontoPrev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28043846"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code >= 200 && responseCode.code < 300) {\r",
+									"   var json = JSON.parse(responseBody);\r",
+									"   postman.setEnvironmentVariable('token', json.token);\r",
+									"} "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"kauiis.a.silveira@gmail.com\",\r\n    \"password\":\"kaua123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"kauiis.a.silveira@gmail.com\",\r\n    \"password\":\"kaua123\",\r\n    \"name\":\"kaua\",\r\n    \"rg\":\"52415678578\",\r\n    \"birthDate\":\"2004-11-20\",\r\n    \"role\":\"DENTISTA\",\r\n    \"cro\":\"48567584\",\r\n    \"clinicId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgotPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/forgot-password?email=kauiis.a.silveira@gmail.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"forgot-password"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "kauiis.a.silveira@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resetPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/reset-password?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJPZG9udG9QcmV2Iiwic3ViIjoia2F1aWlzLmEuc2lsdmVpcmFAZ21haWwuY29tIiwidHlwZSI6InBhc3N3b3JkX3Jlc2V0IiwiZXhwIjoxNzI5NTIwMjU5fQ.Ag44ws9xreuO_6cg5OO_VIl1tt1v4ZRRIz57E7W37ZU&newPassword=kaua12345&confirmNewPassword=kaua12345",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJPZG9udG9QcmV2Iiwic3ViIjoia2F1aWlzLmEuc2lsdmVpcmFAZ21haWwuY29tIiwidHlwZSI6InBhc3N3b3JkX3Jlc2V0IiwiZXhwIjoxNzI5NTIwMjU5fQ.Ag44ws9xreuO_6cg5OO_VIl1tt1v4ZRRIz57E7W37ZU"
+								},
+								{
+									"key": "newPassword",
+									"value": "kaua12345"
+								},
+								{
+									"key": "confirmNewPassword",
+									"value": "kaua12345"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find By Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth?role=ATENDENTE",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth"
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "ATENDENTE"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clinic",
+			"item": [
+				{
+					"name": "findAll Clinica",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clinics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clinics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert Clinica",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Clinica Odonto Alvorada\",\r\n    \"cnpj\":\"9785461/546164-78\",\r\n    \"address\": {\r\n        \"street\":\"Rua pacheco\",\r\n        \"number\":\"92\",\r\n        \"city\":\"São Paulo\",\r\n        \"state\":\"SP\",\r\n        \"zipCode\":\"03728-064\"\r\n    },\r\n    \"phone\":\"11 975122387\",\r\n    \"email\":\"OdontoAlvoradas@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/clinics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clinics"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patient",
+			"item": [
+				{
+					"name": "findAll Patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/patients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find By Rg",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/patients/758924880",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"patients",
+								"758924880"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert Patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Kaua Almeida\",\r\n    \"rg\":\"758924880\",\r\n    \"birthDate\":\"2004-11-20\",\r\n    \"numCard\": 78527145\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/patients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"patients"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Consulta",
+			"item": [
+				{
+					"name": "insert Appointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"dateAppointment\": \"2024-10-01\",\r\n  \"timeAppointment\": \"14:30\",\r\n  \"dentistId\": 1,\r\n  \"patientId\": 1,\r\n  \"procedureTypeId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/appointments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find All By Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments/status?status=Reagendada",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "Reagendada"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Procedure Type",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/proceduresType",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proceduresType"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Instalação de Aparelho dental\",\r\n    \"description\":\"Instalação de Aparelho dental na arcada dentaria\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/proceduresType",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proceduresType"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Procedure Status",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/proceduresStatus",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proceduresStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"VALIDADO\",\r\n    \"description\":\"VALIDADO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/proceduresStatus",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proceduresStatus"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Procedure Validation",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/proceduresValidation",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proceduresValidation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/proceduresValidation/5?status=Reagendada",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proceduresValidation",
+								"5"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "Reagendada"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
