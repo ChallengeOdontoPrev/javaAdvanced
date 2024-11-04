@@ -25,6 +25,11 @@ public class PatientService {
         return new PatientDTO(patient);
     }
 
+    @Transactional
+    public void insertWithProcedure(PatientDTO patientDTO) {
+        this.patientRepository.INSERT_PATIENT(patientDTO.getBirthDate(), patientDTO.getNumCard(), patientDTO.getName(), patientDTO.getRg());
+    }
+
     public List<PatientDTO> findAll() {
         return patientRepository.findAll().stream().map(PatientDTO::new).toList();
     }

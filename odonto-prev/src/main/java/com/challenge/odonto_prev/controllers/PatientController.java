@@ -26,6 +26,12 @@ public class PatientController {
         return ResponseEntity.ok(patient);
     }
 
+    @PostMapping("/withProcedure")
+    public ResponseEntity insertWithProcedure(@RequestBody @Valid PatientDTO patientDTO) {
+        this.patientService.insertWithProcedure(patientDTO);
+        return ResponseEntity.ok("FOI");
+    }
+
     @GetMapping
     public ResponseEntity<List<PatientDTO>> findAll() {
         List<PatientDTO> patients = patientService.findAll();
