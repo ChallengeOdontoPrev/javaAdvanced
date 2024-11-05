@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/auth")
@@ -35,13 +39,18 @@ public class AuthController {
     public ResponseEntity<RegisterResponseDTO> register(@Valid @RequestBody RegisterRequestDTO data) {
         RegisterResponseDTO account = this.authService.signup(data);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{email}")
-                .buildAndExpand(account.email()).toUri();
+                .buildAndExpand(account.getEmail()).toUri();
         return ResponseEntity.created(uri).body(account);
     }
 
     @GetMapping
-    public ResponseEntity<UserDTO> findByRole(@RequestParam UserRole role) {
-        return ResponseEntity.ok(new UserDTO(userService.findByRole(role)));
+    public ResponseEntity<List<UserDTO>> findByRole(@RequestParam UserRole role) {
+        List<UserDTO> users =  userService.findByRole(role).stream().map(UserDTO::new).toList();
+        users.forEach(user -> {
+            user.add(linkTo(methodOn(AuthController.class).register(new RegisterRequestDTO())).withRel("signup"));
+            user.add(linkTo(methodOn(AuthController.class).login(new LoginRequestDTO())).withRel("login"));
+        });
+        return ResponseEntity.ok(users);
     }
 
     // Endpoint para solicitar a redefinição de senha

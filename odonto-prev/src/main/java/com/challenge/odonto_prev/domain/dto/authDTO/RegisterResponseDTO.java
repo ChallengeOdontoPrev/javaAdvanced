@@ -1,4 +1,16 @@
 package com.challenge.odonto_prev.domain.dto.authDTO;
 
-public record RegisterResponseDTO(String email, String name) {
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class RegisterResponseDTO {
+    @NotBlank
+    public String email;
+    @NotBlank
+    public String name;
 }

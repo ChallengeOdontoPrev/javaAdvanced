@@ -63,9 +63,8 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
 
-    public User findByRole(UserRole role) {
-        return this.userRepository.findByRole(role)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+    public List<User> findByRole(UserRole role) {
+        return this.userRepository.findByRole(role);
     }
 
 

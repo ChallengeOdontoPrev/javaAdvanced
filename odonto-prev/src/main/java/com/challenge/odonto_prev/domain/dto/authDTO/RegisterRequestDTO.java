@@ -3,24 +3,29 @@ package com.challenge.odonto_prev.domain.dto.authDTO;
 import com.challenge.odonto_prev.enums.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-public record RegisterRequestDTO(
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RegisterRequestDTO {
         @NotBlank(message = "Nome é obrigatório")
-        String name,
+        public String name;
         @NotBlank(message = "Email é obrigatório")
-        String email,
+        public String email;
         @NotBlank(message = "RG é obrigatório")
-        String rg,
+        public String rg;
         @NotNull(message = "Data de nascimento é obrigatória")
-        LocalDate birthDate,
+        public LocalDate birthDate;
         @NotBlank(message = "Senha é obrigatória")
-        String password,
+        public String password;
         @NotNull(message = "A função/papel é obrigatória")
-        UserRole role,
-        String cro,
+        UserRole role;
+        public String cro;
         @NotNull(message = "O id da clínica é obrigatório")
-        Long clinicId
-) {
+        public Long clinicId;
 }

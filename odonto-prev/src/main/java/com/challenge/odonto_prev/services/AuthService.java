@@ -38,8 +38,8 @@ public class AuthService implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public LoginResponseDTO login(LoginRequestDTO authDTO) {
-        User user = (User) this.loadUserByUsername(authDTO.email());
-        if (passwordEncoder.matches(authDTO.password(), user.getPassword())) {
+        User user = (User) this.loadUserByUsername(authDTO.getEmail());
+        if (passwordEncoder.matches(authDTO.getPassword(), user.getPassword())) {
             String token = this.tokenService.generateToken(user);
             return new LoginResponseDTO(user.getEmail(), token);
         } else {
@@ -49,25 +49,25 @@ public class AuthService implements UserDetailsService {
 
     @Transactional
     public RegisterResponseDTO signup(RegisterRequestDTO authDTO) {
-        this.userService.loadUserByUsername(authDTO.email())
+        this.userService.loadUserByUsername(authDTO.getEmail())
                 .ifPresent(user -> {
                     throw new UserAlreadyExistsException("Conta já existente com este email.");
                 });
 
-        String encryptedPassword = passwordEncoder.encode(authDTO.password());
+        String encryptedPassword = passwordEncoder.encode(authDTO.getPassword());
 
-        UserDTO user = switch (authDTO.role()) {
+        UserDTO user = switch (authDTO.getRole()) {
             case DENTISTA -> {
-                if (authDTO.cro() == null || authDTO.cro().isBlank()) {
+                if (authDTO.getCro() == null || authDTO.getCro().isBlank()) {
                     throw new InvalidCredentialsException("O CRO é obrigatório para o papel de Dentista.");
                 }
-                yield new UserDTO(authDTO.name(), authDTO.email(), authDTO.rg(), authDTO.birthDate(), encryptedPassword, authDTO.role(), authDTO.cro(), authDTO.clinicId());
+                yield new UserDTO(authDTO.getName(), authDTO.getEmail(), authDTO.getRg(), authDTO.getBirthDate(), encryptedPassword, authDTO.getRole(), authDTO.getCro(), authDTO.getClinicId());
             }
             case ATENDENTE -> {
-                if (authDTO.cro() != null) {
+                if (authDTO.getCro() != null) {
                     throw new InvalidCredentialsException("A atendente não pode ter CRO.");
                 }
-                yield new UserDTO(authDTO.name(), authDTO.email(), authDTO.rg(), authDTO.birthDate(), encryptedPassword, authDTO.role(), authDTO.clinicId());
+                yield new UserDTO(authDTO.getName(), authDTO.getEmail(), authDTO.getRg(), authDTO.getBirthDate(), encryptedPassword, authDTO.getRole(), authDTO.getClinicId());
             }
             default -> throw new InvalidCredentialsException("Papel de usuário inválido.");
         };
@@ -109,25 +109,6 @@ public class AuthService implements UserDetailsService {
         // Atualiza a senha
         user.setPassword(passwordEncoder.encode(newPassword));
         userService.updatePassword(user);
-    }
-
-    public User getCurrentUserEmail() {
-        // Obtém a autenticação do contexto
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.isAuthenticated()) {
-            // Obtém o principal, que é o usuário autenticado
-            Object principal = authentication.getPrincipal();
-
-            // Verifica se o principal é uma instância de UserDetails
-            if (principal instanceof UserDetails) {
-                // Retorna o e-mail do usuário autenticado
-                return (User) principal;
-            }
-        }
-
-        // Se não houver autenticação ou o usuário não estiver logado
-        return null;
     }
 
     private void validatePassword(String password, String confirmPassword) {
