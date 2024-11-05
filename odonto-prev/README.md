@@ -93,6 +93,10 @@ realizar o login para obter o token JWT e inseri-lo no Authorization das requisi
 
     **Exemplo:** /auth/reset-password?token=<jwt_token>&newPassword=kk&confirmNewPassword=kk
 
+- **GET** `/auth?role=DENTISTA`
+
+    **Descrição:** Retorna a lista de usuarios com a role DENTISTA.
+
 ### Clínicas (`/clinics`)
 - **GET** `/clinics`
 
@@ -103,23 +107,27 @@ realizar o login para obter o token JWT e inseri-lo no Authorization das requisi
     **Descrição:** Insere uma nova clínica.
     ```json
     {
-    "name":"Clinica Odonto Alvorada",
-    "cnpj":"9785461/546164-78",
-    "address": {
-        "street":"Rua pacheco",
-        "number":"92",
-        "city":"São Paulo",
-        "state":"SP",
-        "zipCode":"03728-064"
-    },
-    "phone":"11 975122387",
-    "email":"OdontoAlvoradas@gmail.com"
+        "name":"Clinica Odonto Alvorada",
+        "cnpj":"9785461/546164-78",
+        "address": {
+            "street":"Rua pacheco",
+            "number":"92",
+            "city":"São Paulo",
+            "state":"SP",
+            "zipCode":"03728-064"
+        },
+        "phone":"11 975122387",
+        "email":"OdontoAlvoradas@gmail.com"
     }
 
 ### Pacientes (`/patients`)
 - **GET** `/patients`
 
     **Descrição:** Retorna a lista de pacientes cadastrados.
+
+- **GET** `/patients/{rg}`
+
+    **Descrição:** Retorna o paciente pelo rg.
 
 - **POST** `/patients`
 
@@ -132,10 +140,42 @@ realizar o login para obter o token JWT e inseri-lo no Authorization das requisi
         "numCard": 7852145
     }
 
+- **POST** `/patients/withProcedure`
+
+    **Descrição:** Insere um novo paciente porém utilizando procedure do banco.
+    ```json
+    {
+        "name": "Kaua Almeida",
+        "rg": "758924780",
+        "birthDate": "2004-11-20",
+        "numCard": 7852145
+    }
+
+- **DELETE** `/patients/withProcedure/{id}`
+
+    **Descrição:** Deleta o paciente pelo id usando procedure.
+
+- **PUT** `/patients/withProcedure`
+
+    **Descrição:** Atualiza o paciente inteiro pelo id usando procedure.
+    ```json
+    {
+        "id":23,
+        "name": "Kaua Almeida",
+        "rg": "758924780",
+        "birthDate": "2004-11-20",
+        "numCard": 7852145
+    }
+
+
 ### Consultas (`/appointments`)
 - **GET** `/appointments`
 
     **Descrição:** Retorna todas as consultas agendadas.
+
+- **GET** `/appointments/status?status=Reagendada`
+
+    **Descrição:** Retorna todas as consultas agendadas com status passado.
 
 - **GET** `/appointments/{id}`
 
@@ -152,8 +192,9 @@ realizar o login para obter o token JWT e inseri-lo no Authorization das requisi
     {
         "dateAppointment": "2024-10-01",
         "timeAppointment": "14:30",
-        "patientId": 141,
-        "procedureTypeId": 65
+        "dentistId": 1,
+        "patientId": 1,
+        "procedureTypeId": 1
     }
 
 ### Tipos de Procedimentos (`/proceduresType`)
@@ -182,6 +223,29 @@ realizar o login para obter o token JWT e inseri-lo no Authorization das requisi
     {
         "name":"VALIDADO",
         "description":"VALIDADO"
+    }
+
+- **POST** `/proceduresStatus/withProcedure`
+
+    **Descrição:** Insere um status de procedimento porém utilizando procedure do banco.
+    ```json
+    {
+        "name":"VALIDADO",
+        "description":"VALIDADO"
+    }
+
+- **DELETE** `/proceduresStatus/withProcedure/{id}`
+
+    **Descrição:** Deleta o status de procedimento pelo id usando procedure.
+
+- **PUT** `/proceduresStatus/withProcedure`
+
+    **Descrição:** Atualiza o status de procedimento inteiro pelo id usando procedure.
+    ```json
+    {
+        "id":14,
+        "name":"Reagendada",
+        "description":"Nova descrição"
     }
 
 ### Validação do Procedimento (`/proceduresValidation`)
