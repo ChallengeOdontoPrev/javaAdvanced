@@ -13,6 +13,28 @@ Serviço de Validação de Consultas Odontológicas
 ### Gustavo Maia
 - **Responsável por:** Desenvolvimento do App em Kotlin para Android e site em C#.
 
+### ENTREGA DEVOPS INSTRUÇÕES
+
+## AVISO IMPORTANTE - DEVOPS - ESTE PROJETO ESTÁ FUNCIONANDO PERFEITAMENTE NO AZURE
+## E A API ESTÁ FUNCIONANDO E SE COMUNICANDO COM REQUISIÇÕES DE QUALQUER LUGAR
+## O BANCO DE DADOS ORACLE ESTÁ HOSPEDADO EM UM SERVIDOR REMOTO DA FIAP
+## TUDO ESTÁ FUNCIONANDO PERFEITAMENTE !!! 
+
+- Construimos uma Dockerfile para a aplicação Spring Boot, e a aplicação foi dockerizada e publicada no Docker Hub.
+- Na vm do Azure, foi logado no Docker Hub e a imagem foi baixada e rodada.
+- Configuramos o Azure para liberar a porta 8080 para a aplicação Spring Boot.
+
+## Como testar a aplicação
+
+- O link para a aplicação rodando no Azure é: http://191.232.33.242:8080
+- Para testar a aplicação, é necessário utilizar o Postman e importar a coleção de requisições.
+- Exemplo de requisição: http://191.232.33.242:8080/clinics
+- A coleção de requisições está no arquivo `ChallengeOdontoPrev.postman_collection.json` na pasta raiz do projeto.
+- A environment do Postman está no arquivo `auth.postman_environment` na pasta raiz do projeto.
+- Para testar a aplicação, é necessário realizar o login e obter o token JWT, e inseri-lo no Authorization das requisições, como bearer token.
+- A aplicação está rodando no Azure, e o banco de dados Oracle está hospedado em um servidor remoto da FIAP.
+
+
 ## Instruções para Rodar a Aplicação
 
 ## Pré-requisitos para rodar a API Spring Boot:
@@ -21,6 +43,7 @@ Serviço de Validação de Consultas Odontológicas
 - As configurações do banco de dados Oracle estão no arquivo `application.properties` na pasta `src/main/resources`,
   não é necessário instalar o banco de dados Oracle, pois a aplicação está utilizando um banco de dados disponibilizado
   em um servidor remoto da FIAP.
+
 
 ## Passo a Passo:
 
