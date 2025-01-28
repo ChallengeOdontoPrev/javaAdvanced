@@ -1,6 +1,7 @@
 package com.challenge.odonto_prev.domain;
 
 import com.challenge.odonto_prev.domain.dto.ProcedureValidationDTO;
+import com.challenge.odonto_prev.enums.ClassDetected;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,11 @@ public class ProcedureValidation {
     private String imgUrlInitial;
     private String imgUrlFinal;
 
+    @Enumerated(EnumType.STRING)
+    private ClassDetected classInitial;
+    @Enumerated(EnumType.STRING)
+    private ClassDetected classFinal;
+
     @OneToOne(mappedBy = "procedureValidation")
     private Appointment appointment;
     @ManyToOne
@@ -29,6 +35,8 @@ public class ProcedureValidation {
         this.id = procedureValidationDTO.getId();
         this.imgUrlInitial = procedureValidationDTO.getImgUrlInitial();
         this.imgUrlFinal = procedureValidationDTO.getImgUrlFinal();
+        this.classInitial = procedureValidationDTO.getClassInitial();
+        this.classFinal = procedureValidationDTO.getClassFinal();
     }
 
     public ProcedureValidation(ProcedureValidation procedureValidation) {
@@ -38,5 +46,7 @@ public class ProcedureValidation {
         this.appointment = procedureValidation.getAppointment();
         this.procedureType = procedureValidation.getProcedureType();
         this.procedureStatus = procedureValidation.getProcedureStatus();
+        this.classInitial = procedureValidation.getClassInitial();
+        this.classFinal = procedureValidation.getClassFinal();
     }
 }

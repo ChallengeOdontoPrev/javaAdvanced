@@ -1,6 +1,7 @@
 package com.challenge.odonto_prev.domain.dto;
 
 import com.challenge.odonto_prev.domain.ProcedureValidation;
+import com.challenge.odonto_prev.enums.ClassDetected;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,8 @@ public class ProcedureValidationDTO extends RepresentationModel<ProcedureValidat
     private String imgUrlFinal;
     private ProcedureTypeDTO procedureType;
     private ProcedureStatusDTO procedureStatus;
+    private ClassDetected classInitial;
+    private ClassDetected classFinal;
 
     public ProcedureValidationDTO(ProcedureValidation procedureValidation) {
         this.id = procedureValidation.getId();
@@ -22,5 +25,7 @@ public class ProcedureValidationDTO extends RepresentationModel<ProcedureValidat
         this.imgUrlFinal = procedureValidation.getImgUrlFinal();
         this.procedureType = new ProcedureTypeDTO(procedureValidation.getProcedureType());
         this.procedureStatus = new ProcedureStatusDTO(procedureValidation.getProcedureStatus());
+        this.classInitial = procedureValidation.getClassInitial();
+        this.classFinal = procedureValidation.getClassFinal();
     }
 }
