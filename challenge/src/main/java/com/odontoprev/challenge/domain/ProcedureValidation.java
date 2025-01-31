@@ -3,7 +3,10 @@ package com.odontoprev.challenge.domain;
 import com.odontoprev.challenge.domain.dto.ProcedureValidationDTO;
 import com.odontoprev.challenge.enums.ClassDetected;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor

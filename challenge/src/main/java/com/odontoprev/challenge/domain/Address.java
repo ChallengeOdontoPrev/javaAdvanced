@@ -3,7 +3,10 @@ package com.odontoprev.challenge.domain;
 
 import com.odontoprev.challenge.domain.dto.AddressDTO;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter

@@ -39,6 +39,17 @@ public class ProcedureValidationService {
         return new ProcedureValidationDTO(procedureValidation);
     }
 
+    @Transactional
+    public void updateAddImages(String imgUrlInitial, String imgUrlFinal, Long id) {
+        ProcedureValidation procedureValidation = new ProcedureValidation(
+                this.procedureValidationRepository.findById(id)
+                        .orElseThrow(() -> new NoSuchElementException("Procedimento não encontrado !!"))
+        );
+        procedureValidation.setImgUrlInitial(imgUrlInitial);
+        procedureValidation.setImgUrlFinal(imgUrlFinal);
+        procedureValidationRepository.save(procedureValidation);
+    }
+
     public List<ProcedureValidationDTO> findAll() {
         return procedureValidationRepository.findAll().stream().map(ProcedureValidationDTO::new).toList();
     }

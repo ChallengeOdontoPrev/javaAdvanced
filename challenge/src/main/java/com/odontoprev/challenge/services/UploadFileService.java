@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +23,7 @@ public class UploadFileService {
     @Value("${test.bucket-name}")
     private String bucketName;
 
-    public String uploadFiles(MultipartFile fileStart, MultipartFile fileEnd, Long idAppointment) throws IOException {
+    public List<String> uploadFiles(MultipartFile fileStart, MultipartFile fileEnd, Long idAppointment) throws IOException {
 
         if (fileStart.isEmpty() || fileEnd.isEmpty()) {
             throw new IOException("Ambos os arquivos devem ser enviados.");
@@ -43,7 +45,7 @@ public class UploadFileService {
         BlobInfo endBlobInfo = BlobInfo.newBuilder(endBlobId).build();
         storage.createFrom(endBlobInfo, fileEnd.getInputStream());
 
-        return "Arquivos enviados com sucesso para: " + startObjectName + " e " + endObjectName;
+        return List.of(startObjectName, endObjectName);
     }
 
     private String extractExtension(String filename) {

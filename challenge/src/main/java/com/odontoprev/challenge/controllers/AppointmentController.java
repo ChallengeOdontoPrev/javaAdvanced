@@ -3,12 +3,17 @@ package com.odontoprev.challenge.controllers;
 import com.odontoprev.challenge.domain.dto.AppointmentDTO;
 import com.odontoprev.challenge.domain.dto.AppointmentResponseDTO;
 import com.odontoprev.challenge.services.AppointmentService;
+import com.odontoprev.challenge.services.UploadFileService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -20,6 +25,9 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
+    @Autowired
+    private UploadFileService uploadFileService;
+
     @PostMapping
     public ResponseEntity<AppointmentDTO> insert(@RequestBody @Valid AppointmentDTO appointmentDTO) {
         AppointmentDTO appointment = appointmentService.insert(appointmentDTO);
@@ -28,6 +36,29 @@ public class AppointmentController {
         appointment.add(linkTo(methodOn(AppointmentController.class).findAllByStatus("Agendada")).withRel("find all by status"));
         appointment.add(linkTo(methodOn(AppointmentController.class).delete(appointment.getId())).withRel("delete by id"));
         return ResponseEntity.ok(appointment);
+    }
+
+    @PostMapping("/{idAppointment}/validate")
+    public ResponseEntity<String> uploadFiles(
+            @RequestParam("fileStart") MultipartFile fileStart,
+            @RequestParam("fileEnd") MultipartFile fileEnd,
+            @PathVariable("idAppointment") Long idAppointment) {
+        try {
+            if (fileStart.isEmpty() || fileEnd.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Os arquivos fileStart e fileEnd são obrigatórios.");
+            }
+
+            List<String> result = uploadFileService.uploadFiles(fileStart, fileEnd, idAppointment);
+
+            this.appointmentService.updateProcedureValidation(idAppointment, result.getFirst(), result.getLast());
+
+            return ResponseEntity.ok("Consulta enviada para validação.");
+        } catch (IOException e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro interno ao processar os arquivos.");
+        }
     }
 
     @GetMapping

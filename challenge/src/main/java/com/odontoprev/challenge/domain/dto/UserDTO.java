@@ -4,7 +4,10 @@ import com.odontoprev.challenge.domain.User;
 import com.odontoprev.challenge.enums.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
