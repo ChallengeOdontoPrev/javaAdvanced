@@ -52,8 +52,4 @@ public class ProcedureStatusService {
                 .orElseThrow(() -> new NoSuchElementException("Status de Procedimento não encontrado !!")));
     }
 
-    public ProcedureStatus findDefaultStatus(String name) {
-        return procedureStatusRepository.findByName(name)
-                .orElse(null);
-    }
 }

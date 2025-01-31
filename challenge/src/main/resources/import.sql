@@ -1,7 +1,7 @@
 -- PROCEDURE VALIDATION
-INSERT INTO tb_procedure_status (name, description) VALUES ('Em Análise de Validação', 'Processo de verificação das imagens e dados do procedimento iniciado.');
+INSERT INTO tb_procedure_status (name, description) VALUES ('Em Analise para Validacao', 'Processo de verificacao das imagens e dados do procedimento iniciado.');
 INSERT INTO tb_procedure_status (name, description) VALUES ('Aprovado sem Irregularidades', 'Procedimento validado com sucesso, sem irregularidades.');
-INSERT INTO tb_procedure_status (name, description) VALUES ('Reanálise Solicitada', 'Nova análise solicitada para revisão do status, seja por pedido do dentista ou da operadora.');
+INSERT INTO tb_procedure_status (name, description) VALUES ('Reanalise Solicitada', 'Nova analise solicitada para revisao do status, seja por pedido do dentista ou da operadora.');
 
 INSERT INTO tb_procedure_type (name, description, class_initial, class_final) VALUES ('Instalação de Aparelho Ortodôntico', 'Procedimento de aplicação de aparelho ortodôntico para correção dos dentes.', 'SEM_APARELHO', 'APARELHO');
 INSERT INTO tb_procedure_type (name, description, class_initial, class_final) VALUES ('Remoção de Aparelho Ortodôntico', 'Procedimento de retirada do aparelho ortodôntico após finalização do tratamento.', 'APARELHO', 'SEM_APARELHO');

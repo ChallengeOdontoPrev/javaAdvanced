@@ -29,7 +29,7 @@ public class ProcedureValidationService {
         ProcedureValidation procedureValidation = new ProcedureValidation(procedureValidationDTO);
 
         procedureValidation.setProcedureStatus(new ProcedureStatus(
-                procedureStatusService.findByName("Em Análise de Validação")
+                procedureStatusService.findByName("Em Analise para Validacao")
         ));
 
         procedureValidation.setProcedureType(new ProcedureType(

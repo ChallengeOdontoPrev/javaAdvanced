@@ -74,7 +74,7 @@ public class AppointmentService {
         return appointmentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Consulta não encontrada"));
     }
 
-    public void updateProcedureValidation(Long idAppointment , String imgUrlInitial, String imgUrlFinal) {
+    public void updateProcedureValidation(Long idAppointment, String imgUrlInitial, String imgUrlFinal) {
         Appointment appointment = this.appointmentRepository.findById(idAppointment)
                 .orElseThrow(() -> new NoSuchElementException("Consulta não encontrada"));
 
