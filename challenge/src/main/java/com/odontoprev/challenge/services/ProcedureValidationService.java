@@ -3,6 +3,7 @@ package com.odontoprev.challenge.services;
 import com.odontoprev.challenge.domain.ProcedureStatus;
 import com.odontoprev.challenge.domain.ProcedureType;
 import com.odontoprev.challenge.domain.ProcedureValidation;
+import com.odontoprev.challenge.domain.dto.ProcedureTypeDTO;
 import com.odontoprev.challenge.domain.dto.ProcedureValidationDTO;
 import com.odontoprev.challenge.repositories.ProcedureValidationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,15 @@ public class ProcedureValidationService {
                 procedureStatusService.findByName("Em Analise para Validacao")
         ));
 
+        ProcedureTypeDTO procedureType = procedureTypeService.findById(procedureTypeId);
+
         procedureValidation.setProcedureType(new ProcedureType(
-                this.procedureTypeService.findById(procedureTypeId)
+                procedureType
         ));
+
+        procedureValidation.setClassInitial(procedureType.getClassInitial());
+        procedureValidation.setClassFinal(procedureType.getClassFinal());
+
         procedureValidation = procedureValidationRepository.save(procedureValidation);
         return new ProcedureValidationDTO(procedureValidation);
     }

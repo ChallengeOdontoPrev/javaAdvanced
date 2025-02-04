@@ -1,6 +1,7 @@
 package com.odontoprev.challenge.controllers.handler;
 
 import com.odontoprev.challenge.services.exceptions.InvalidCredentialsException;
+import com.odontoprev.challenge.services.exceptions.JsonConvertException;
 import com.odontoprev.challenge.services.exceptions.UserAlreadyExistsException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -84,6 +85,13 @@ public class ControllerExceptionHandler {
     public ResponseEntity<CustomError> jdbcSQLIntegrityConstraintViolationException(DataIntegrityViolationException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         CustomError error = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(JsonConvertException.class)
+    public ResponseEntity<CustomError> jsonConvertException(JsonConvertException exception, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        CustomError error = new CustomError(Instant.now(), status.value(), exception.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(error);
     }
 

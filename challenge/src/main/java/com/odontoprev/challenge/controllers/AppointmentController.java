@@ -3,6 +3,7 @@ package com.odontoprev.challenge.controllers;
 import com.odontoprev.challenge.domain.dto.AppointmentDTO;
 import com.odontoprev.challenge.domain.dto.AppointmentResponseDTO;
 import com.odontoprev.challenge.services.AppointmentService;
+import com.odontoprev.challenge.services.MessageSenderService;
 import com.odontoprev.challenge.services.UploadFileService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class AppointmentController {
     @Autowired
     private UploadFileService uploadFileService;
 
+    @Autowired
+    private MessageSenderService messageSenderService;
+
     @PostMapping
     public ResponseEntity<AppointmentDTO> insert(@RequestBody @Valid AppointmentDTO appointmentDTO) {
         AppointmentDTO appointment = appointmentService.insert(appointmentDTO);
@@ -38,7 +42,7 @@ public class AppointmentController {
     }
 
     @PostMapping("/{idAppointment}/validate")
-    public ResponseEntity<String> uploadFiles(
+    public ResponseEntity<String> validateAppointment(
             @RequestParam("fileStart") MultipartFile fileStart,
             @RequestParam("fileEnd") MultipartFile fileEnd,
             @PathVariable("idAppointment") Long idAppointment) {
@@ -52,9 +56,14 @@ public class AppointmentController {
 
             this.appointmentService.updateProcedureValidation(idAppointment, result.getFirst(), result.getLast());
 
-            return ResponseEntity.ok("Consulta enviada para validação.");
-        } catch (IOException e) {
+            String message = this.messageSenderService.processAndSendMessage(
+                    this.appointmentService.findById(idAppointment),
+                    result.getFirst(),
+                    result.getLast()
+            );
 
+            return ResponseEntity.ok("Consulta enviada para validação.\nMensagem: " + message);
+        } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro interno ao processar os arquivos.");
         }
