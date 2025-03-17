@@ -7,7 +7,7 @@ import com.odontoprev.challenge.domain.dto.auth.RegisterRequestDTO;
 import com.odontoprev.challenge.domain.dto.auth.RegisterResponseDTO;
 import com.odontoprev.challenge.enums.UserRole;
 import com.odontoprev.challenge.services.AuthService;
-import com.odontoprev.challenge.services.UserService;
+import com.odontoprev.challenge.services.models.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.odontoprev.challenge.services;
+package com.odontoprev.challenge.services.models;
 
 import com.odontoprev.challenge.domain.Clinic;
 import com.odontoprev.challenge.domain.User;

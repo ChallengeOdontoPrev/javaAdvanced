@@ -1,9 +1,10 @@
-package com.odontoprev.challenge.services;
+package com.odontoprev.challenge.services.models;
 
 import com.odontoprev.challenge.domain.*;
 import com.odontoprev.challenge.domain.dto.AppointmentDTO;
 import com.odontoprev.challenge.domain.dto.ProcedureValidationDTO;
 import com.odontoprev.challenge.repositories.AppointmentRepository;
+import com.odontoprev.challenge.services.AuthService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

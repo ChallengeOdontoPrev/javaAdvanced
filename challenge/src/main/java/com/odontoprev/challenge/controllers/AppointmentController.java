@@ -2,7 +2,7 @@ package com.odontoprev.challenge.controllers;
 
 import com.odontoprev.challenge.domain.dto.AppointmentDTO;
 import com.odontoprev.challenge.domain.dto.AppointmentResponseDTO;
-import com.odontoprev.challenge.services.AppointmentService;
+import com.odontoprev.challenge.services.models.AppointmentService;
 import com.odontoprev.challenge.services.MessageSenderService;
 import com.odontoprev.challenge.services.UploadFileService;
 import jakarta.validation.Valid;

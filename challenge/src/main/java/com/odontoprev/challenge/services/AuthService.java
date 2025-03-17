@@ -9,6 +9,7 @@ import com.odontoprev.challenge.domain.dto.auth.RegisterResponseDTO;
 import com.odontoprev.challenge.infra.security.TokenService;
 import com.odontoprev.challenge.services.exceptions.InvalidCredentialsException;
 import com.odontoprev.challenge.services.exceptions.UserAlreadyExistsException;
+import com.odontoprev.challenge.services.models.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

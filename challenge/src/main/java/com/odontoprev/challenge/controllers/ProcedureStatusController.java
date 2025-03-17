@@ -1,7 +1,7 @@
 package com.odontoprev.challenge.controllers;
 
 import com.odontoprev.challenge.domain.dto.ProcedureStatusDTO;
-import com.odontoprev.challenge.services.ProcedureStatusService;
+import com.odontoprev.challenge.services.models.ProcedureStatusService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

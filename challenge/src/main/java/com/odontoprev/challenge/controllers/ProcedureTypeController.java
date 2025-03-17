@@ -1,7 +1,7 @@
 package com.odontoprev.challenge.controllers;
 
 import com.odontoprev.challenge.domain.dto.ProcedureTypeDTO;
-import com.odontoprev.challenge.services.ProcedureTypeService;
+import com.odontoprev.challenge.services.models.ProcedureTypeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

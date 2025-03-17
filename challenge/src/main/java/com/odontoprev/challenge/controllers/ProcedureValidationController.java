@@ -1,7 +1,7 @@
 package com.odontoprev.challenge.controllers;
 
 import com.odontoprev.challenge.domain.dto.ProcedureValidationDTO;
-import com.odontoprev.challenge.services.ProcedureValidationService;
+import com.odontoprev.challenge.services.models.ProcedureValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

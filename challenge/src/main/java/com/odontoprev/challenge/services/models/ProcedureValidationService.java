@@ -1,4 +1,4 @@
-package com.odontoprev.challenge.services;
+package com.odontoprev.challenge.services.models;
 
 import com.odontoprev.challenge.domain.ProcedureStatus;
 import com.odontoprev.challenge.domain.ProcedureType;
