@@ -1,13 +1,16 @@
 package com.odontoprev.challenge.services;
 
 
+import com.azure.messaging.servicebus.ServiceBusClientBuilder;
+import com.azure.messaging.servicebus.ServiceBusMessage;
+import com.azure.messaging.servicebus.ServiceBusSenderClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odontoprev.challenge.domain.Appointment;
 import com.odontoprev.challenge.domain.dto.MessageAppointmentValidationDTO;
-import com.odontoprev.challenge.gateway.PubsubOutboundGateway;
 import com.odontoprev.challenge.services.exceptions.JsonConvertException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,8 +19,11 @@ public class MessageSenderService {
 
     private final ObjectMapper objectMapper;
 
-    private final PubsubOutboundGateway messagingGateway;
+    @Value("${azure.connection-bus-send}")
+    private String connectionBusSend;
 
+    @Value("${azure.queue-name}")
+    private String queueName;
 
     public String processAndSendMessage(Appointment appointment, String imgUrlInitial, String imgUrlFinal) {
 
@@ -31,7 +37,7 @@ public class MessageSenderService {
 
         try {
             String messageJson = writeValueAsString(message);
-            sendToPubsub(messageJson);
+            sendToAzureBus(messageJson);
 
             return messageJson;
 
@@ -40,11 +46,18 @@ public class MessageSenderService {
         }
     }
 
+    public void sendToAzureBus(String messageJson) {
+        ServiceBusSenderClient senderClient = new ServiceBusClientBuilder()
+                .connectionString(connectionBusSend)
+                .sender()
+                .queueName(queueName)
+                .buildClient();
+
+        senderClient.sendMessage(new ServiceBusMessage(messageJson));
+    }
+
     public String writeValueAsString(Object object) throws JsonProcessingException {
         return objectMapper.writeValueAsString(object);
     }
 
-    public void sendToPubsub(String messageJson) {
-        messagingGateway.sendToPubsub(messageJson);
-    }
 }
