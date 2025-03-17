@@ -3,6 +3,7 @@ package com.odontoprev.challenge.services.models;
 import com.odontoprev.challenge.domain.*;
 import com.odontoprev.challenge.domain.dto.AppointmentDTO;
 import com.odontoprev.challenge.domain.dto.ProcedureValidationDTO;
+import com.odontoprev.challenge.domain.dto.UpdateAppointmentDTO;
 import com.odontoprev.challenge.repositories.AppointmentRepository;
 import com.odontoprev.challenge.services.AuthService;
 import org.springframework.beans.BeanUtils;
@@ -75,11 +76,31 @@ public class AppointmentService {
         return appointmentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Consulta não encontrada"));
     }
 
+    @Transactional
     public void updateProcedureValidation(Long idAppointment, String imgUrlInitial, String imgUrlFinal) {
         Appointment appointment = this.appointmentRepository.findById(idAppointment)
                 .orElseThrow(() -> new NoSuchElementException("Consulta não encontrada"));
 
         this.procedureValidationService.updateAddImages(imgUrlInitial, imgUrlFinal, appointment.getProcedureValidation().getId());
+    }
+
+    @Transactional
+    public void updateProcedureType(Long idAppointment, UpdateAppointmentDTO appointmentDTO){
+        Appointment appointment = this.appointmentRepository.findById(idAppointment)
+                .orElseThrow(() -> new NoSuchElementException("Consulta não encontrada"));
+
+        appointment.setDateAppointment(appointmentDTO.getDateAppointment());
+        appointment.setTimeAppointment(appointmentDTO.getTimeAppointment());
+
+        ProcedureType procedureType = new ProcedureType(this.procedureTypeService.findById(appointmentDTO.getProcedureTypeId()));
+
+        appointment.setProcedureType(procedureType);
+
+        User user = this.userService.findById(appointmentDTO.getDentistId());
+
+        appointment.setUser(user);
+
+        appointmentRepository.save(appointment);
     }
 
     @Transactional

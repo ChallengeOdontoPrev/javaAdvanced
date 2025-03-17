@@ -2,6 +2,7 @@ package com.odontoprev.challenge.controllers;
 
 import com.odontoprev.challenge.domain.dto.AppointmentDTO;
 import com.odontoprev.challenge.domain.dto.AppointmentResponseDTO;
+import com.odontoprev.challenge.domain.dto.UpdateAppointmentDTO;
 import com.odontoprev.challenge.services.models.AppointmentService;
 import com.odontoprev.challenge.services.MessageSenderService;
 import com.odontoprev.challenge.services.UploadFileService;
@@ -105,5 +106,11 @@ public class AppointmentController {
     public ResponseEntity<String> delete(@PathVariable Long id) {
         appointmentService.deleteById(id);
         return ResponseEntity.ok("Consulta deletada com sucesso");
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid UpdateAppointmentDTO appointmentDTO) {
+        appointmentService.updateProcedureType(id, appointmentDTO);
+        return ResponseEntity.ok("Consulta atualizada com sucesso");
     }
 }
