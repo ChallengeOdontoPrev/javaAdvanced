@@ -56,13 +56,13 @@ public class AppointmentController {
 
             this.appointmentService.updateProcedureValidation(idAppointment, result.getFirst(), result.getLast());
 
-            String message = this.messageSenderService.processAndSendMessage(
-                    this.appointmentService.findById(idAppointment),
-                    result.getFirst(),
-                    result.getLast()
-            );
+//            String message = this.messageSenderService.processAndSendMessage(
+//                    this.appointmentService.findById(idAppointment),
+//                    result.getFirst(),
+//                    result.getLast()
+//            );
 
-            return ResponseEntity.ok("Consulta enviada para validação.\nMensagem: " + message);
+            return ResponseEntity.ok("Consulta enviada para validação.");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro interno ao processar os arquivos.");
