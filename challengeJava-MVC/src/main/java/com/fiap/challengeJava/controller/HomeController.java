@@ -14,9 +14,14 @@ public class HomeController {
         return new ModelAndView("home");
     }
 
-    @PostMapping("/cadastro")
-    public ModelAndView cadastro(Model model) {
-        return new ModelAndView("cadastro");
+    @PostMapping("/cadastro-atendente")
+    public ModelAndView cadastroAtendente(Model model) {
+        return new ModelAndView("cadastro-atendente");
+    }
+
+    @PostMapping("/cadastro-dentista")
+    public ModelAndView cadastroDentista(Model model) {
+        return new ModelAndView("cadastro-dentista");
     }
 
     @PostMapping("/login")

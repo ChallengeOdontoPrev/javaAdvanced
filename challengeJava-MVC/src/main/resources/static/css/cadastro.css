@@ -103,3 +103,26 @@ input, select {
 .register-button:hover {
     background-color: #0056b3;
 }
+
+.login-text {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.login-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #007bff;
+    color: #007bff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: #007bff;
+    color: white;
+}
