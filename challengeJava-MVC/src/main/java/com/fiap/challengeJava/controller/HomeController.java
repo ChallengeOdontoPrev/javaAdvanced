@@ -10,6 +10,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
     @GetMapping("/")
+    public ModelAndView index(Model model) {
+        return new ModelAndView("home");
+    }
+
+    @PostMapping("/home")
     public ModelAndView home(Model model) {
         return new ModelAndView("home");
     }
