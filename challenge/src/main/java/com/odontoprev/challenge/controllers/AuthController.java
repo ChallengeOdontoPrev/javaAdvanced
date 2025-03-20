@@ -1,5 +1,6 @@
 package com.odontoprev.challenge.controllers;
 
+import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.domain.dto.UserDTO;
 import com.odontoprev.challenge.domain.dto.auth.LoginRequestDTO;
 import com.odontoprev.challenge.domain.dto.auth.LoginResponseDTO;
@@ -51,6 +52,11 @@ public class AuthController {
             user.add(linkTo(methodOn(AuthController.class).login(new LoginRequestDTO())).withRel("login"));
         });
         return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/usersAudit")
+    public ResponseEntity<List<AuditProjection>> findAllUserAudits() {
+        return ResponseEntity.ok(this.userService.findAllUserAudits());
     }
 
     // Endpoint para solicitar a redefinição de senha

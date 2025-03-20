@@ -2,6 +2,7 @@ package com.odontoprev.challenge.services.models;
 
 import com.odontoprev.challenge.domain.*;
 import com.odontoprev.challenge.domain.dto.AppointmentDTO;
+import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.domain.dto.ProcedureValidationDTO;
 import com.odontoprev.challenge.domain.dto.UpdateAppointmentDTO;
 import com.odontoprev.challenge.repositories.AppointmentRepository;
@@ -101,6 +102,10 @@ public class AppointmentService {
         appointment.setUser(user);
 
         appointmentRepository.save(appointment);
+    }
+
+    public List<AuditProjection> findAllAppointmentAudits() {
+        return appointmentRepository.findAllAppointmentAudits();
     }
 
     @Transactional

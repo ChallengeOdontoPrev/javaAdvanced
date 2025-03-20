@@ -2,6 +2,7 @@ package com.odontoprev.challenge.controllers;
 
 import com.odontoprev.challenge.domain.dto.AppointmentDTO;
 import com.odontoprev.challenge.domain.dto.AppointmentResponseDTO;
+import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.domain.dto.UpdateAppointmentDTO;
 import com.odontoprev.challenge.services.models.AppointmentService;
 import com.odontoprev.challenge.services.MessageSenderService;
@@ -100,6 +101,11 @@ public class AppointmentController {
         appointment.add(linkTo(methodOn(AppointmentController.class).insert(new AppointmentDTO())).withRel("Insert"));
         appointment.add(linkTo(methodOn(AppointmentController.class).delete(id)).withRel("delete by id"));
         return ResponseEntity.ok(appointment);
+    }
+
+    @GetMapping("/appointmentsAudit")
+    public ResponseEntity<List<AuditProjection>> findAllAppointmentAudits() {
+        return ResponseEntity.ok(this.appointmentService.findAllAppointmentAudits());
     }
 
     @DeleteMapping("/{id}")

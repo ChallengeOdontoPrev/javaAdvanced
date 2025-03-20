@@ -2,6 +2,7 @@ package com.odontoprev.challenge.repositories;
 
 
 import com.odontoprev.challenge.domain.User;
+import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.enums.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     List<User> findByRole(UserRole role);
+
+    @Query(value = """
+        SELECT audit_id AS auditId, operation, changed_by AS changedBy, change_timestamp AS changeTimestamp
+        FROM tb_user_audit
+        """, nativeQuery = true)
+    List<AuditProjection> findAllUserAudits();
 }

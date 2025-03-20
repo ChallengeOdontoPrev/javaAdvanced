@@ -2,6 +2,7 @@ package com.odontoprev.challenge.services.models;
 
 import com.odontoprev.challenge.domain.Clinic;
 import com.odontoprev.challenge.domain.User;
+import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.domain.dto.UserDTO;
 import com.odontoprev.challenge.enums.UserRole;
 import com.odontoprev.challenge.repositories.UserRepository;
@@ -56,6 +57,10 @@ public class UserService {
 
     public List<UserDTO> findAll() {
         return this.userRepository.findAll().stream().map(UserDTO::new).toList();
+    }
+
+    public List<AuditProjection> findAllUserAudits() {
+        return userRepository.findAllUserAudits();
     }
 
     public User findById(Long id) {

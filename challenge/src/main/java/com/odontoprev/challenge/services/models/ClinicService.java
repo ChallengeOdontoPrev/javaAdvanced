@@ -2,6 +2,7 @@ package com.odontoprev.challenge.services.models;
 
 import com.odontoprev.challenge.domain.Address;
 import com.odontoprev.challenge.domain.Clinic;
+import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.domain.dto.ClinicDTO;
 import com.odontoprev.challenge.repositories.AddressRepository;
 import com.odontoprev.challenge.repositories.ClinicRepository;
@@ -33,6 +34,10 @@ public class ClinicService {
 
         clinic = clinicRepository.save(clinic);
         return new ClinicDTO(clinic);
+    }
+
+    public List<AuditProjection> findAllClinicAudits() {
+        return clinicRepository.findAllClinicAudits();
     }
 
     public List<ClinicDTO> findAll() {

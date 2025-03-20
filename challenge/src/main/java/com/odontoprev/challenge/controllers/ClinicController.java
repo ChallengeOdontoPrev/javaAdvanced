@@ -1,5 +1,6 @@
 package com.odontoprev.challenge.controllers;
 
+import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.domain.dto.ClinicDTO;
 import com.odontoprev.challenge.services.models.ClinicService;
 import jakarta.validation.Valid;
@@ -31,6 +32,11 @@ public class ClinicController {
         List<ClinicDTO> clinics = clinicService.findAll();
         clinics.forEach(clinic -> clinic.add(linkTo(methodOn(ClinicController.class).insert(new ClinicDTO())).withRel("Insert")));
         return ResponseEntity.ok(clinics);
+    }
+
+    @GetMapping("/clinicsAudit")
+    public ResponseEntity<List<AuditProjection>> findAllClinicAudits() {
+        return ResponseEntity.ok(this.clinicService.findAllClinicAudits());
     }
 
 }
