@@ -3,7 +3,6 @@ package com.odontoprev.challenge.services.models;
 import com.odontoprev.challenge.domain.ProcedureType;
 import com.odontoprev.challenge.domain.dto.ProcedureTypeDTO;
 import com.odontoprev.challenge.repositories.ProcedureTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,8 +12,11 @@ import java.util.NoSuchElementException;
 @Service
 public class ProcedureTypeService {
 
-    @Autowired
-    private ProcedureTypeRepository procedureTypeRepository;
+    private final ProcedureTypeRepository procedureTypeRepository;
+
+    public ProcedureTypeService(ProcedureTypeRepository procedureTypeRepository) {
+        this.procedureTypeRepository = procedureTypeRepository;
+    }
 
     @Transactional
     public ProcedureTypeDTO insert(ProcedureTypeDTO procedureTypeDTO) {

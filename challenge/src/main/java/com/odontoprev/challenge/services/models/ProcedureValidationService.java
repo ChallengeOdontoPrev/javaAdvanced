@@ -6,7 +6,6 @@ import com.odontoprev.challenge.domain.ProcedureValidation;
 import com.odontoprev.challenge.domain.dto.ProcedureTypeDTO;
 import com.odontoprev.challenge.domain.dto.ProcedureValidationDTO;
 import com.odontoprev.challenge.repositories.ProcedureValidationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +15,15 @@ import java.util.NoSuchElementException;
 @Service
 public class ProcedureValidationService {
 
-    @Autowired
-    private ProcedureValidationRepository procedureValidationRepository;
+    private final ProcedureValidationRepository procedureValidationRepository;
+    private final ProcedureStatusService procedureStatusService;
+    private final ProcedureTypeService procedureTypeService;
 
-    @Autowired
-    private ProcedureStatusService procedureStatusService;
-
-    @Autowired
-    private ProcedureTypeService procedureTypeService;
+    public ProcedureValidationService(ProcedureValidationRepository procedureValidationRepository, ProcedureStatusService procedureStatusService, ProcedureTypeService procedureTypeService) {
+        this.procedureValidationRepository = procedureValidationRepository;
+        this.procedureStatusService = procedureStatusService;
+        this.procedureTypeService = procedureTypeService;
+    }
 
     @Transactional
     public ProcedureValidationDTO insert(ProcedureValidationDTO procedureValidationDTO, Long procedureTypeId) {

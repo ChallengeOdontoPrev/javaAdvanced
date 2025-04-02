@@ -9,12 +9,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odontoprev.challenge.domain.Appointment;
 import com.odontoprev.challenge.domain.dto.MessageAppointmentValidationDTO;
 import com.odontoprev.challenge.services.exceptions.JsonConvertException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class MessageSenderService {
 
     private final ObjectMapper objectMapper;
@@ -24,6 +22,10 @@ public class MessageSenderService {
 
     @Value("${azure.queue-name}")
     private String queueName;
+
+    public MessageSenderService(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     public String processAndSendMessage(Appointment appointment, String imgUrlInitial, String imgUrlFinal) {
 

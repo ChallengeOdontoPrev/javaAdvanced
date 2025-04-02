@@ -6,18 +6,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "tb_patient")
 public class Patient extends People {
@@ -35,5 +27,29 @@ public class Patient extends People {
         this.setBirthDate(patientDTO.getBirthDate());
         this.numCard = patientDTO.getNumCard();
         this.setCreatedAt(LocalDate.now());
+    }
+
+    public Patient(Long numCard, List<Appointment> appointments) {
+        this.numCard = numCard;
+        this.appointments = appointments;
+    }
+
+    public Patient() {
+    }
+
+    public Long getNumCard() {
+        return numCard;
+    }
+
+    public void setNumCard(Long numCard) {
+        this.numCard = numCard;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
     }
 }

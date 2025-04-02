@@ -2,22 +2,16 @@ package com.odontoprev.challenge.domain.dto;
 
 import com.odontoprev.challenge.domain.ProcedureStatus;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.hateoas.RepresentationModel;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class ProcedureStatusDTO extends RepresentationModel<ProcedureStatusDTO> {
+public class ProcedureStatusDTO {
     private Long id;
     @NotBlank
     private String name;
     @NotBlank
     private String description;
+
+    public ProcedureStatusDTO() {
+    }
 
     public ProcedureStatusDTO(ProcedureStatus procedureStatus) {
         this.id = procedureStatus.getId();
@@ -27,6 +21,36 @@ public class ProcedureStatusDTO extends RepresentationModel<ProcedureStatusDTO> 
 
     public ProcedureStatusDTO(String name, String description) {
         this.name = name;
+        this.description = description;
+    }
+
+    public ProcedureStatusDTO(Long id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
     }
 }

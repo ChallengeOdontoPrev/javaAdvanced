@@ -22,7 +22,6 @@ public class PatientController {
     @PostMapping
     public ResponseEntity<PatientDTO> insert(@RequestBody @Valid PatientDTO patientDTO) {
         PatientDTO patient = patientService.insert(patientDTO);
-        patient.add(linkTo(methodOn(PatientController.class).findAll()).withRel("find all"));
         return ResponseEntity.ok(patient);
     }
 
@@ -47,15 +46,12 @@ public class PatientController {
     @GetMapping
     public ResponseEntity<List<PatientDTO>> findAll() {
         List<PatientDTO> patients = patientService.findAll();
-        patients.forEach(patient -> patient.add(linkTo(methodOn(PatientController.class).insert(new PatientDTO())).withRel("Insert")));
         return ResponseEntity.ok(patients);
     }
 
     @GetMapping("/{rg}")
     public ResponseEntity<PatientDTO> findByRg(@PathVariable String rg) {
         PatientDTO patient = patientService.findByRg(rg);
-        patient.add(linkTo(methodOn(PatientController.class).findAll()).withRel("find all"));
-        patient.add(linkTo(methodOn(PatientController.class).insert(new PatientDTO())).withRel("Insert"));
         return ResponseEntity.ok(patient);
     }
 

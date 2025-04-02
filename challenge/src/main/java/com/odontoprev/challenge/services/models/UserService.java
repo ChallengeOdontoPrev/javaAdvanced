@@ -2,12 +2,11 @@ package com.odontoprev.challenge.services.models;
 
 import com.odontoprev.challenge.domain.Clinic;
 import com.odontoprev.challenge.domain.User;
-import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.domain.dto.UserDTO;
+import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.enums.UserRole;
 import com.odontoprev.challenge.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +18,13 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final ClinicService clinicService;
 
-    @Autowired
-    private ClinicService clinicService;
+    public UserService(UserRepository userRepository, ClinicService clinicService) {
+        this.userRepository = userRepository;
+        this.clinicService = clinicService;
+    }
 
     @Transactional
     public UserDTO insert(UserDTO userDTO) {

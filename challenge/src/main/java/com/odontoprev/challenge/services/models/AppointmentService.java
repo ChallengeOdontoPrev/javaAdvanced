@@ -2,13 +2,12 @@ package com.odontoprev.challenge.services.models;
 
 import com.odontoprev.challenge.domain.*;
 import com.odontoprev.challenge.domain.dto.AppointmentDTO;
-import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.domain.dto.ProcedureValidationDTO;
 import com.odontoprev.challenge.domain.dto.UpdateAppointmentDTO;
+import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.repositories.AppointmentRepository;
 import com.odontoprev.challenge.services.AuthService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,23 +18,19 @@ import java.util.NoSuchElementException;
 @Service
 public class AppointmentService {
 
-    @Autowired
-    private AppointmentRepository appointmentRepository;
+    private final AppointmentRepository appointmentRepository;
+    private final PatientService patientService;
+    private final UserService userService;
+    private final ProcedureValidationService procedureValidationService;
+    private final ProcedureTypeService procedureTypeService;
 
-    @Autowired
-    private PatientService patientService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private ProcedureValidationService procedureValidationService;
-
-    @Autowired
-    private ProcedureTypeService procedureTypeService;
-
-    @Autowired
-    private AuthService authService;
+    public AppointmentService(AppointmentRepository appointmentRepository, PatientService patientService, UserService userService, ProcedureValidationService procedureValidationService, ProcedureTypeService procedureTypeService, AuthService authService) {
+        this.appointmentRepository = appointmentRepository;
+        this.patientService = patientService;
+        this.userService = userService;
+        this.procedureValidationService = procedureValidationService;
+        this.procedureTypeService = procedureTypeService;
+    }
 
     @Transactional
     public AppointmentDTO insert(AppointmentDTO appointmentDTO) {
@@ -86,7 +81,7 @@ public class AppointmentService {
     }
 
     @Transactional
-    public void updateProcedureType(Long idAppointment, UpdateAppointmentDTO appointmentDTO){
+    public void updateProcedureType(Long idAppointment, UpdateAppointmentDTO appointmentDTO) {
         Appointment appointment = this.appointmentRepository.findById(idAppointment)
                 .orElseThrow(() -> new NoSuchElementException("Consulta não encontrada"));
 

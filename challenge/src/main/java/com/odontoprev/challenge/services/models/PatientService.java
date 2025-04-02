@@ -3,7 +3,6 @@ package com.odontoprev.challenge.services.models;
 import com.odontoprev.challenge.domain.Patient;
 import com.odontoprev.challenge.domain.dto.PatientDTO;
 import com.odontoprev.challenge.repositories.PatientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,8 +13,11 @@ import java.util.NoSuchElementException;
 @Service
 public class PatientService {
 
-    @Autowired
-    private PatientRepository patientRepository;
+    private final PatientRepository patientRepository;
+
+    public PatientService(PatientRepository patientRepository) {
+        this.patientRepository = patientRepository;
+    }
 
     @Transactional
     public PatientDTO insert(PatientDTO patientDTO) {

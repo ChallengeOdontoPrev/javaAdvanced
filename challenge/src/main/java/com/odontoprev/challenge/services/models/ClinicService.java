@@ -2,12 +2,11 @@ package com.odontoprev.challenge.services.models;
 
 import com.odontoprev.challenge.domain.Address;
 import com.odontoprev.challenge.domain.Clinic;
-import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.domain.dto.ClinicDTO;
+import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.repositories.AddressRepository;
 import com.odontoprev.challenge.repositories.ClinicRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +16,13 @@ import java.util.NoSuchElementException;
 @Service
 public class ClinicService {
 
-    @Autowired
-    private ClinicRepository clinicRepository;
+    private final ClinicRepository clinicRepository;
+    private final AddressRepository addressRepository;
 
-    @Autowired
-    private AddressRepository addressRepository;
+    public ClinicService(ClinicRepository clinicRepository, AddressRepository addressRepository) {
+        this.clinicRepository = clinicRepository;
+        this.addressRepository = addressRepository;
+    }
 
     @Transactional
     public ClinicDTO insert(ClinicDTO clinicDTO) {

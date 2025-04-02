@@ -2,17 +2,9 @@ package com.odontoprev.challenge.domain;
 
 import com.odontoprev.challenge.domain.dto.ClinicDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "tb_clinic")
 public class Clinic {
@@ -43,5 +35,83 @@ public class Clinic {
         this.cnpj = clinicDTO.getCnpj();
         this.phone = clinicDTO.getPhone();
         this.email = clinicDTO.getEmail();
+    }
+
+    public Clinic() {
+    }
+
+    public Clinic(Long id, String name, String cnpj, String phone, String email, Address address, List<Appointment> appointments, List<User> users) {
+        this.id = id;
+        this.name = name;
+        this.cnpj = cnpj;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.appointments = appointments;
+        this.users = users;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

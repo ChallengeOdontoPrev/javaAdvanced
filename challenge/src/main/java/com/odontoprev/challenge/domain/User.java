@@ -3,10 +3,6 @@ package com.odontoprev.challenge.domain;
 import com.odontoprev.challenge.domain.dto.UserDTO;
 import com.odontoprev.challenge.enums.UserRole;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,10 +11,6 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "tb_user")
 public class User extends People implements UserDetails {
@@ -39,6 +31,18 @@ public class User extends People implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
+
+    public User() {
+    }
+
+    public User(String email, String password, UserRole role, String cro, List<Appointment> appointments, Clinic clinic) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.cro = cro;
+        this.appointments = appointments;
+        this.clinic = clinic;
+    }
 
     // Dentista
     public User(String name, String rg, LocalDate birthDate, String email, String password, String cro, UserRole role) {
@@ -99,6 +103,50 @@ public class User extends People implements UserDetails {
         } else {
             return List.of(new SimpleGrantedAuthority("ROLE_ATENDENTE"));
         }
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public String getCro() {
+        return cro;
+    }
+
+    public void setCro(String cro) {
+        this.cro = cro;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
+
+    public Clinic getClinic() {
+        return clinic;
+    }
+
+    public void setClinic(Clinic clinic) {
+        this.clinic = clinic;
     }
 
     @Override

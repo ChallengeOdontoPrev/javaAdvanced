@@ -22,7 +22,6 @@ public class ProcedureStatusController {
     @PostMapping
     public ResponseEntity<ProcedureStatusDTO> insert(@RequestBody @Valid ProcedureStatusDTO procedureStatusDTO) {
         ProcedureStatusDTO procedureStatus = procedureStatusService.insert(procedureStatusDTO);
-        procedureStatus.add(linkTo(methodOn(ProcedureStatusController.class).findAll()).withRel("find all"));
         return ResponseEntity.ok(procedureStatus);
     }
 
@@ -47,9 +46,6 @@ public class ProcedureStatusController {
     @GetMapping
     public ResponseEntity<List<ProcedureStatusDTO>> findAll() {
         List<ProcedureStatusDTO> proceduresStatus = procedureStatusService.findAll();
-        proceduresStatus.forEach(procedureStatus ->
-                procedureStatus.add(linkTo(methodOn(ProcedureStatusController.class).insert(new ProcedureStatusDTO())).withRel("Insert"))
-        );
         return ResponseEntity.ok(proceduresStatus);
     }
 }

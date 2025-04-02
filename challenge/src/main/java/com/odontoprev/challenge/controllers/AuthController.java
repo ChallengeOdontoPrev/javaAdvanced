@@ -1,11 +1,11 @@
 package com.odontoprev.challenge.controllers;
 
-import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.domain.dto.UserDTO;
 import com.odontoprev.challenge.domain.dto.auth.LoginRequestDTO;
 import com.odontoprev.challenge.domain.dto.auth.LoginResponseDTO;
 import com.odontoprev.challenge.domain.dto.auth.RegisterRequestDTO;
 import com.odontoprev.challenge.domain.dto.auth.RegisterResponseDTO;
+import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.enums.UserRole;
 import com.odontoprev.challenge.services.AuthService;
 import com.odontoprev.challenge.services.models.UserService;
@@ -17,9 +17,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/auth")
@@ -47,10 +44,6 @@ public class AuthController {
     @GetMapping
     public ResponseEntity<List<UserDTO>> findByRole(@RequestParam UserRole role) {
         List<UserDTO> users = userService.findByRole(role).stream().map(UserDTO::new).toList();
-        users.forEach(user -> {
-            user.add(linkTo(methodOn(AuthController.class).register(new RegisterRequestDTO())).withRel("signup"));
-            user.add(linkTo(methodOn(AuthController.class).login(new LoginRequestDTO())).withRel("login"));
-        });
         return ResponseEntity.ok(users);
     }
 

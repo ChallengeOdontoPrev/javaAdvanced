@@ -4,7 +4,6 @@ import com.odontoprev.challenge.domain.Address;
 import com.odontoprev.challenge.domain.dto.AddressDTO;
 import com.odontoprev.challenge.repositories.AddressRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,8 +13,11 @@ import java.util.NoSuchElementException;
 @Service
 public class AddressService {
 
-    @Autowired
-    private AddressRepository addressRepository;
+    private final AddressRepository addressRepository;
+
+    public AddressService(AddressRepository addressRepository) {
+        this.addressRepository = addressRepository;
+    }
 
     @Transactional
     public AddressDTO insert(AddressDTO addressDTO) {

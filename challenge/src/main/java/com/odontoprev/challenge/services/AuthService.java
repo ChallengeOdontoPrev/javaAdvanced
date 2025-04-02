@@ -10,7 +10,6 @@ import com.odontoprev.challenge.infra.security.TokenService;
 import com.odontoprev.challenge.services.exceptions.InvalidCredentialsException;
 import com.odontoprev.challenge.services.exceptions.UserAlreadyExistsException;
 import com.odontoprev.challenge.services.models.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,14 +20,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AuthService implements UserDetailsService {
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private TokenService tokenService;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
-    private EmailService emailService;
+    private final UserService userService;
+    private final TokenService tokenService;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final EmailService emailService;
+
+    public AuthService(UserService userService, TokenService tokenService, BCryptPasswordEncoder passwordEncoder, EmailService emailService) {
+        this.userService = userService;
+        this.tokenService = tokenService;
+        this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

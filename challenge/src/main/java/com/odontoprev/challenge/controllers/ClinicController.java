@@ -1,7 +1,7 @@
 package com.odontoprev.challenge.controllers;
 
-import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.domain.dto.ClinicDTO;
+import com.odontoprev.challenge.domain.projection.AuditProjection;
 import com.odontoprev.challenge.services.models.ClinicService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +23,12 @@ public class ClinicController {
     @PostMapping
     public ResponseEntity<ClinicDTO> insert(@RequestBody @Valid ClinicDTO clinicDTO) {
         ClinicDTO clinic = clinicService.insert(clinicDTO);
-        clinic.add(linkTo(methodOn(ClinicController.class).findAll()).withRel("find all"));
         return ResponseEntity.ok(clinic);
     }
 
     @GetMapping
     public ResponseEntity<List<ClinicDTO>> findAll() {
         List<ClinicDTO> clinics = clinicService.findAll();
-        clinics.forEach(clinic -> clinic.add(linkTo(methodOn(ClinicController.class).insert(new ClinicDTO())).withRel("Insert")));
         return ResponseEntity.ok(clinics);
     }
 

@@ -22,16 +22,12 @@ public class ProcedureTypeController {
     @PostMapping
     public ResponseEntity<ProcedureTypeDTO> insert(@RequestBody @Valid ProcedureTypeDTO procedureTypeDTO) {
         ProcedureTypeDTO procedureType = procedureTypeService.insert(procedureTypeDTO);
-        procedureType.add(linkTo(methodOn(ProcedureTypeController.class).findAll()).withRel("find all"));
         return ResponseEntity.ok(procedureType);
     }
 
     @GetMapping
     public ResponseEntity<List<ProcedureTypeDTO>> findAll() {
         List<ProcedureTypeDTO> proceduresType = procedureTypeService.findAll();
-        proceduresType.forEach(procedureType ->
-                procedureType.add(linkTo(methodOn(ProcedureTypeController.class).insert(new ProcedureTypeDTO())).withRel("Insert"))
-        );
         return ResponseEntity.ok(proceduresType);
     }
 }

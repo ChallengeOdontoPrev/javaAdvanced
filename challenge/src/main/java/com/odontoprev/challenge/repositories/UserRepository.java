@@ -19,8 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByRole(UserRole role);
 
     @Query(value = """
-        SELECT audit_id AS auditId, operation, changed_by AS changedBy, change_timestamp AS changeTimestamp
-        FROM tb_user_audit
-        """, nativeQuery = true)
+            SELECT audit_id AS auditId, operation, changed_by AS changedBy, change_timestamp AS changeTimestamp
+            FROM tb_user_audit
+            """, nativeQuery = true)
     List<AuditProjection> findAllUserAudits();
 }
