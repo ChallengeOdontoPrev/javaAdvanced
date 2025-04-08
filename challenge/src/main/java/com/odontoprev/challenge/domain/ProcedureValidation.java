@@ -25,6 +25,9 @@ public class ProcedureValidation {
     @ManyToOne
     private ProcedureStatus procedureStatus;
 
+    public ProcedureValidation() {
+    }
+
     public ProcedureValidation(ProcedureValidationDTO procedureValidationDTO) {
         this.id = procedureValidationDTO.getId();
         this.imgUrlInitial = procedureValidationDTO.getImgUrlInitial();
