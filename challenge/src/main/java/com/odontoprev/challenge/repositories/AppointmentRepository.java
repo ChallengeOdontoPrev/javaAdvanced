@@ -11,7 +11,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     @Query(nativeQuery = true, value = """
             SELECT *
             FROM tb_appointment ap
-            WHERE ap.name = :status
+            WHERE ap.status = :status
             """)
     List<Appointment> findAllByStatus(String status);
 
@@ -20,4 +20,12 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             FROM tb_appointment_audit
             """, nativeQuery = true)
     List<AuditProjection> findAllAppointmentAudits();
+
+    @Query(nativeQuery = true, value = """
+            SELECT ap.*
+            FROM tb_appointment ap
+            JOIN tb_patient pa ON ap.patient_id = pa.id
+            WHERE pa.num_card = :patientNumCard
+            """)
+    List<Appointment> findAllByPatient_NumCard(Long patientNumCard);
 }

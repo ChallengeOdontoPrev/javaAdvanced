@@ -46,9 +46,9 @@ public class PatientController {
         return ResponseEntity.ok(patients);
     }
 
-    @GetMapping("/{rg}")
-    public ResponseEntity<PatientDTO> findByRg(@PathVariable String rg) {
-        PatientDTO patient = patientService.findByRg(rg);
+    @GetMapping("/{idOdontoPrev}")
+    public ResponseEntity<PatientDTO> findByIdOdontoPrev(@PathVariable Long idOdontoPrev) {
+        PatientDTO patient = patientService.findByIdOdontoPrev(idOdontoPrev);
         return ResponseEntity.ok(patient);
     }
 

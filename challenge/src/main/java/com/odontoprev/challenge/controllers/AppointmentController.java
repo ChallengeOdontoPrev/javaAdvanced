@@ -82,6 +82,11 @@ public class AppointmentController {
         return ResponseEntity.ok(appointment);
     }
 
+    @GetMapping("byPatientIdOdontoPrev/{idOdontoPrev}")
+    public ResponseEntity<List<AppointmentResponseDTO>> findByPatientIdOdontoPrev(@PathVariable Long idOdontoPrev) {
+        return ResponseEntity.ok(this.appointmentService.findAllByPatientNumCard(idOdontoPrev));
+    }
+
     @GetMapping("/appointmentsAudit")
     public ResponseEntity<List<AuditProjection>> findAllAppointmentAudits() {
         return ResponseEntity.ok(this.appointmentService.findAllAppointmentAudits());

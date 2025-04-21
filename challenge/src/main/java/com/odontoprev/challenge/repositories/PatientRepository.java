@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public interface PatientRepository extends JpaRepository<Patient, Long> {
-    Optional<Patient> findByRg(String rg);
+    Optional<Patient> findByNumCard(Long numCard);
 
     @Procedure(name = "INSERT_PATIENT")
     void INSERT_PATIENT(

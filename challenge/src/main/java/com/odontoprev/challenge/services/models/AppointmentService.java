@@ -2,6 +2,7 @@ package com.odontoprev.challenge.services.models;
 
 import com.odontoprev.challenge.domain.*;
 import com.odontoprev.challenge.domain.dto.AppointmentDTO;
+import com.odontoprev.challenge.domain.dto.AppointmentResponseDTO;
 import com.odontoprev.challenge.domain.dto.ProcedureValidationDTO;
 import com.odontoprev.challenge.domain.dto.UpdateAppointmentDTO;
 import com.odontoprev.challenge.domain.projection.AuditProjection;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class AppointmentService {
@@ -70,6 +72,10 @@ public class AppointmentService {
 
     public List<Appointment> findAllByStatus(String status) {
         return appointmentRepository.findAllByStatus(status);
+    }
+
+    public List<AppointmentResponseDTO> findAllByPatientNumCard(Long patientNumCard) {
+        return this.appointmentRepository.findAllByPatient_NumCard(patientNumCard).stream().map(AppointmentResponseDTO::new).collect(Collectors.toList());
     }
 
     public Appointment findById(Long id) {

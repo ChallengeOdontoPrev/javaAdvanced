@@ -50,7 +50,7 @@ public class PatientService {
         return new PatientDTO(patientRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Paciente não encontrado !!")));
     }
 
-    public PatientDTO findByRg(String rg) {
-        return new PatientDTO(patientRepository.findByRg(rg).orElseThrow(() -> new NoSuchElementException("Paciente não encontrado !!")));
+    public PatientDTO findByIdOdontoPrev(Long numCard) {
+        return new PatientDTO(patientRepository.findByNumCard(numCard).orElseThrow(() -> new NoSuchElementException("Paciente não encontrado !!")));
     }
 }
