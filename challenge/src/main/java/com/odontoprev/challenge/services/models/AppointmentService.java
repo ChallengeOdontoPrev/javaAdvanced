@@ -5,6 +5,7 @@ import com.odontoprev.challenge.domain.dto.AppointmentDTO;
 import com.odontoprev.challenge.domain.dto.ProcedureValidationDTO;
 import com.odontoprev.challenge.domain.dto.UpdateAppointmentDTO;
 import com.odontoprev.challenge.domain.projection.AuditProjection;
+import com.odontoprev.challenge.enums.AppointmentStatus;
 import com.odontoprev.challenge.repositories.AppointmentRepository;
 import com.odontoprev.challenge.services.AuthService;
 import org.springframework.beans.BeanUtils;
@@ -36,6 +37,9 @@ public class AppointmentService {
     public AppointmentDTO insert(AppointmentDTO appointmentDTO) {
         Appointment appointment = new Appointment();
         BeanUtils.copyProperties(appointmentDTO, appointment);
+
+        appointment.setStatus(AppointmentStatus.SCHEDULED);
+
         appointment.setPatient(new Patient(
                 patientService.findById(appointmentDTO.getPatientId())
         ));
@@ -76,6 +80,10 @@ public class AppointmentService {
     public void updateProcedureValidation(Long idAppointment, String imgUrlInitial, String imgUrlFinal) {
         Appointment appointment = this.appointmentRepository.findById(idAppointment)
                 .orElseThrow(() -> new NoSuchElementException("Consulta não encontrada"));
+
+        appointment.setStatus(AppointmentStatus.FINISHED);
+
+        this.appointmentRepository.save(appointment);
 
         this.procedureValidationService.updateAddImages(imgUrlInitial, imgUrlFinal, appointment.getProcedureValidation().getId());
     }

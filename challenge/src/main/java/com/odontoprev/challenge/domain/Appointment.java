@@ -1,5 +1,6 @@
 package com.odontoprev.challenge.domain;
 
+import com.odontoprev.challenge.enums.AppointmentStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -14,6 +15,8 @@ public class Appointment {
     private LocalDate dateAppointment;
     private String timeAppointment;
     private LocalDateTime createdAt;
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status;
 
     @ManyToOne
     private Patient patient;
@@ -25,6 +28,7 @@ public class Appointment {
     private ProcedureValidation procedureValidation;
     @ManyToOne
     private ProcedureType procedureType;
+
 
     public Appointment() {
     }
@@ -111,5 +115,13 @@ public class Appointment {
 
     public void setProcedureType(ProcedureType procedureType) {
         this.procedureType = procedureType;
+    }
+
+    public AppointmentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AppointmentStatus status) {
+        this.status = status;
     }
 }
