@@ -14,19 +14,24 @@ public class ProcedureStatus {
     private Long id;
     private String name;
     private String description;
+    private String code;
 
     @OneToMany(mappedBy = "procedureStatus")
     private List<ProcedureValidation> procedureValidations;
+
+    public ProcedureStatus(Long id, String name, String description, String code, List<ProcedureValidation> procedureValidations) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.code = code;
+        this.procedureValidations = procedureValidations;
+    }
 
     public ProcedureStatus(ProcedureStatusDTO procedureStatusDTO) {
         this.id = procedureStatusDTO.getId();
         this.name = procedureStatusDTO.getName();
         this.description = procedureStatusDTO.getDescription();
-    }
-
-    public ProcedureStatus(String name, String description) {
-        this.name = name;
-        this.description = description;
+        this.code = procedureStatusDTO.getCode();
     }
 
     public ProcedureStatus() {
@@ -69,5 +74,13 @@ public class ProcedureStatus {
 
     public void setProcedureValidations(List<ProcedureValidation> procedureValidations) {
         this.procedureValidations = procedureValidations;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

@@ -9,6 +9,8 @@ public class ProcedureStatusDTO {
     private String name;
     @NotBlank
     private String description;
+    @NotBlank
+    private String code;
 
     public ProcedureStatusDTO() {
     }
@@ -17,17 +19,14 @@ public class ProcedureStatusDTO {
         this.id = procedureStatus.getId();
         this.name = procedureStatus.getName();
         this.description = procedureStatus.getDescription();
+        this.code = procedureStatus.getCode();
     }
 
-    public ProcedureStatusDTO(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
-
-    public ProcedureStatusDTO(Long id, String name, String description) {
+    public ProcedureStatusDTO(Long id, String name, String description, String code) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.code = code;
     }
 
     public Long getId() {
@@ -52,5 +51,13 @@ public class ProcedureStatusDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
